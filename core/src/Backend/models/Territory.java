@@ -12,6 +12,7 @@ public class Territory {
     private ArrayList<Territory> neighbors;
 
     public Territory() {
+        neighbors = new ArrayList<>();
     }
 
     public String getName() {
