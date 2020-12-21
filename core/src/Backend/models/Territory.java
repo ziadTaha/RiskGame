@@ -1,9 +1,12 @@
-package Backend.Model;
+package Backend.models;
 
 import java.util.ArrayList;
 
 public class Territory {
-    private int id;
+
+
+    private String name;
+    private Agent agent;
     private int owner;
     private int armySize;
     private ArrayList<Territory> neighbors;
@@ -11,13 +14,22 @@ public class Territory {
     public Territory() {
     }
 
-    public int getId() {
-        return id;
+    public String getName() {
+        return name;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setName(String name) {
+        this.name = name;
     }
+
+    public Agent getAgent() {
+        return agent;
+    }
+
+    public void setAgent(Agent agent) {
+        this.agent = agent;
+    }
+
 
     public int getOwner() {
         return owner;
