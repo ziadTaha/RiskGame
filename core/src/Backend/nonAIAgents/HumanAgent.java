@@ -2,18 +2,16 @@ package Backend.nonAIAgents;
 import Backend.models.Agent;
 import Backend.models.Territory;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Random;
 
 
 public class HumanAgent extends Agent {
+    private ArrayList<Territory> territories;
+
     public HumanAgent() {
         super();
     }
 
-    private ArrayList<Territory> territories;
-
+    @Override
     public void addArmies(Territory territory, int armiesCount) {
         //check territory whether to be owned or not
         if (territory.getAgent() != this) {
@@ -47,13 +45,7 @@ public class HumanAgent extends Agent {
         if(from.getArmySize() == 1 )
             throw new Error("Territory must have more than 1 army to Declare attack");
 
-        //check for invaded territory whether owned by player or not
-        if(to.getAgent() == null){
-            to.setAgent(this);
-            to.setArmySize(1);
-            from.setArmySize(from.getArmySize() - 1);
-        }else{
-            declareAttack(from, to, attackDiceCount, defendDiceCount);
-        }
+        // attack
+        this.declareAttack(from, to, attackDiceCount, defendDiceCount);
     }
 }
