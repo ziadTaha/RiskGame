@@ -3,36 +3,22 @@ package Backend.nonAIAgents;
 import Backend.models.Agent;
 import Backend.models.Territory;
 
-import java.util.ArrayList;
-
-public class PassiveAgent implements Agent {
-    private ArrayList<Territory> territories;
+public class PassiveAgent extends Agent {
+    public PassiveAgent(){
+        super();
+    }
 
     @Override
     public void addArmies() {
-
-    }
-    @Override
-    public void attack() {
-    }
-
-    @Override
-    public void addArmies(Territory territory, int armiesCount) {
-
-    }
-
-    @Override
-    public void attack(Territory from, Territory to, int armiesCount) {
-
-    }
-
-    @Override
-    public void addTerritory(Territory territory) {
-
-    }
-
-    @Override
-    public ArrayList<Territory> getOwnedTerritories() {
-        return null;
+        Territory fewestArmiesTerritory = this.getTerritories().get(0);
+        for(Territory ownedTerritory: this.getTerritories()){
+            if(ownedTerritory.getArmySize() < fewestArmiesTerritory.getArmySize())
+                fewestArmiesTerritory = ownedTerritory;
+        }
+        // adding bonus armies s bonus armies to the territory with the fewest armies
+        int bonusArmies =  this.getTerritories().size() / 3;
+        if(bonusArmies< 3)
+            bonusArmies = 3;
+        fewestArmiesTerritory.setArmySize(fewestArmiesTerritory.getArmySize() + bonusArmies);
     }
 }
