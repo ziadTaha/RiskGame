@@ -52,7 +52,7 @@ public class PlayerBarActor extends BaseActor {
         textButtonStyle.font = customFont;
         textButtonStyle.fontColor = Color.WHITE;
         attack = new TextButton("attack",textButtonStyle);
-        move = new TextButton("attack",textButtonStyle);
+        move = new TextButton("move",textButtonStyle);
         Group group = new Group();
 
         Table table = new Table();
@@ -66,9 +66,6 @@ public class PlayerBarActor extends BaseActor {
         table.add(playerType);
         table.add(attack);
         table.add(move);
-
-
-
         this.addActor(table);
     }
 }

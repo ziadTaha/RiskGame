@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
+import com.mygdx.game.Actors.MapActor;
 import com.mygdx.game.Actors.PlayerBarActor;
 
 public class GameScreen extends BaseScreen{
@@ -17,6 +18,7 @@ public class GameScreen extends BaseScreen{
     int cur ;
     private PlayerBarActor p1Bar;
     private PlayerBarActor p2Bar;
+    private MapActor mapActor;
     public GameScreen(Game game,String map,String p1,String p2) {
         super(game);
         System.out.println("ss"+map);
@@ -30,21 +32,22 @@ public class GameScreen extends BaseScreen{
         Table table = new Table();
         table.align(Align.top);
         Image image;
-        if(map.equals("USA")){
-             image = new Image(new Texture(Gdx.files.internal("maps/usa1.png")));
-        }
-        else{
-             image = new Image(new Texture(Gdx.files.internal("maps/egypt1.png")));
-        }
-        table.add(image).expandX().align(Align.left);
-        table.row();
+
+        mapActor = new MapActor(map,mainStage);
+
+
+        mainStage.addActor(mapActor);
+
         Group group = new Group();
         p1Bar = new PlayerBarActor(mainStage,1,p1);
         p2Bar = new PlayerBarActor(mainStage,2,p2);
+
+
         group.addActor(p1Bar);
         group.addActor(p2Bar);
         p2Bar.setVisible(false);
-        cur = 2;
+        cur = 1;
+        table.align(Align.left);
         table.add(group).align(Align.bottomLeft).expandY();
         table.setFillParent(true);
         mainStage.addActor(table);
