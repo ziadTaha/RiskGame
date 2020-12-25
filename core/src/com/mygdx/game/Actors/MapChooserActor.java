@@ -80,7 +80,8 @@ public class MapChooserActor extends BaseActor{
     }
     public void change(){
         map =!map;
-        if(map) {
+        System.out.println(map);
+        if(!map) {
             mapTypes.setText("USA");
             imageEgypt.setVisible(false);
             imageUSA.setVisible(true);
@@ -93,7 +94,7 @@ public class MapChooserActor extends BaseActor{
 
     }
     public String value(){
-        if(map) return "USA";
+        if(!map) return "USA";
         return "EGYPT";
     }
 }

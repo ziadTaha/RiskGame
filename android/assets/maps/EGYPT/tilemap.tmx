@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="3" nextobjectid="31">
+ <tileset firstgid="1" source="tileset.tsx"/>
+ <objectgroup id="2" name="map">
+  <object id="1" name="0" gid="27" x="-0.287899" y="596.874" width="960" height="540"/>
+  <object id="2" name="1" gid="1" x="114.667" y="289.667" width="336" height="206"/>
+  <object id="3" name="21" gid="21" x="131" y="571.667" width="475" height="281"/>
+  <object id="4" name="8" gid="8" x="585" y="196.333" width="135" height="94"/>
+  <object id="5" name="14" gid="14" x="273.667" y="290.333" width="275" height="138"/>
+  <object id="8" name="10" gid="10" x="479" y="159.5" width="26" height="26"/>
+  <object id="9" name="7" gid="7" x="568" y="118.5" width="20" height="16"/>
+  <object id="10" name="22" gid="22" x="474" y="335" width="57" height="43"/>
+  <object id="11" name="23" gid="23" x="481.5" y="570.5" width="363" height="364"/>
+  <object id="12" name="24" gid="24" x="511" y="366.5" width="59" height="41"/>
+  <object id="13" name="26" gid="25" x="549" y="417.5" width="58" height="56"/>
+  <object id="15" name="18" gid="18" x="589.5" y="285.5" width="132" height="111"/>
+  <object id="16" name="20" gid="20" x="354.5" y="291" width="137" height="61"/>
+  <object id="17" name="27" gid="26" x="504" y="570.5" width="126" height="159"/>
+  <object id="18" name="19" gid="19" x="418" y="234.5" width="91" height="36"/>
+  <object id="19" name="15" gid="15" x="424" y="221.5" width="76" height="39"/>
+  <object id="20" name="16" gid="16" x="504" y="182.5" width="43" height="30"/>
+  <object id="21" name="3" gid="3" x="410.5" y="175" width="73" height="81"/>
+  <object id="22" name="2" gid="2" x="408.5" y="149" width="30" height="47"/>
+  <object id="23" name="17" gid="17" x="544" y="224.5" width="58" height="68"/>
+  <object id="24" name="13" gid="13" x="538.5" y="158.5" width="60" height="48"/>
+  <object id="25" name="12" gid="12" x="507" y="159" width="56" height="48"/>
+  <object id="26" name="5" gid="5" x="505" y="141.5" width="49" height="51"/>
+  <object id="27" name="9" gid="9" x="475.5" y="140.5" width="32" height="29"/>
+  <object id="28" name="4" gid="4" x="457" y="119.5" width="55" height="33"/>
+  <object id="29" name="11" gid="11" x="495.5" y="164" width="26" height="24"/>
+  <object id="30" name="6" gid="6" x="521.455" y="108.909" width="21" height="16"/>
+ </objectgroup>
+</map>
