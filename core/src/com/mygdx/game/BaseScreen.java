@@ -14,7 +14,7 @@ public abstract class BaseScreen implements Screen
         mainStage = new Stage();
         uiStage = new Stage();
         this.game=game;
-        initialize();
+
     }
     public abstract void initialize();
     public abstract void update(float dt);

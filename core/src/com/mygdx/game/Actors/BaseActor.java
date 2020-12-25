@@ -16,4 +16,8 @@ public class BaseActor extends Group
         setPosition(x,y);
         s.addActor(this);
     }
+    public BaseActor(Stage s){
+        super();
+
+    }
 }

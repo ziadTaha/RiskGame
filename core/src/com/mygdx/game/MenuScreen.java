@@ -43,13 +43,16 @@ public class MenuScreen extends BaseScreen{
 
     public MenuScreen(Game game) {
         super(game);
+        initialize();
     }
 
     @Override
     public void initialize() {
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
-
+        final MapChooserActor mapChooser = new MapChooserActor(600,500,mainStage);
+        final PlayerChooserActor p1Chooser = new PlayerChooserActor(350,300,mainStage);
+        final PlayerChooserActor p2Chooser = new PlayerChooserActor(900,300,mainStage);
 		/*tiledMap = new TmxMapLoader().load("maps/map.tmx");
 		tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);*/
         //Gdx.input.setInputProcessor(this);
@@ -69,7 +72,8 @@ public class MenuScreen extends BaseScreen{
                         !((InputEvent)event).getType().equals(InputEvent.Type.touchDown)){
                     return false;
                 }
-                game.setScreen(new GameScreen(game));
+                System.out.println(mapChooser.value());
+                game.setScreen(new GameScreen(game,mapChooser.value(),p1Chooser.value(),p2Chooser.value()));
                 return false;
             }
         });
@@ -85,9 +89,7 @@ public class MenuScreen extends BaseScreen{
                 return false;
             }
         });
-        MapChooserActor mapChooser = new MapChooserActor(500,500,mainStage);
-        PlayerChooserActor p1Chooser = new PlayerChooserActor(300,300,mainStage);
-        PlayerChooserActor p2Chooser = new PlayerChooserActor(700,300,mainStage);
+
         table.add().expandY();
         table.row();
         table.add(startButton).bottom();

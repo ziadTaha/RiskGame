@@ -10,7 +10,8 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.forceExit =false;
 		config.height=720;
-		config.width=1024;
+		config.width=1280;
+		config.resizable=false;
 		new LwjglApplication(new RiskGame(), config);
 	}
 }
