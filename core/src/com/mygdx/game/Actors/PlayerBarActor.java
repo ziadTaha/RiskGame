@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.BaseDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Align;
+import com.mygdx.game.GameScreen;
 
 public class PlayerBarActor extends BaseActor {
     private int p ;
@@ -26,11 +27,14 @@ public class PlayerBarActor extends BaseActor {
     private Image background;
     private Label player;
     private Label playerType;
-
-    public PlayerBarActor( Stage s,int p,String type) {
+    private int player_mode ;
+    private Label bonusText;
+    private GameScreen gameScreen;
+    public PlayerBarActor(Stage s, int p, String type, GameScreen gameScreen) {
         super(s);
         this.p=p;
         this.type=type;
+        this.gameScreen =gameScreen;
         if(p == 1){
             background = new Image(new Texture(Gdx.files.internal("ui_elements/player_bar1.png")));
 
@@ -44,20 +48,22 @@ public class PlayerBarActor extends BaseActor {
         label1Style.font = myFont;
         player= new Label("player"+p,label1Style);
         playerType = new Label(type,label1Style);
-
+        bonusText = new Label("Bonus : "+0,label1Style);
         Group group = new Group();
-
         Table table = new Table();
         table.align(Align.left);
         table.padLeft(40);
+        table.padRight(50);
         table.setBackground(background.getDrawable());
         table.setHeight(200);
         table.setWidth(1280);
         //table.align(Align.left);
         table.add(player).align(Align.left);
         table.row();
-        table.add(playerType);
+        table.add(playerType).padRight(100);
+        player_mode=0;
         if(type.equals("Human")) {
+            player_mode=1;
             TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
             Texture buttonTex = new Texture( Gdx.files.internal("ui_elements/button_purble.png") );
             NinePatch buttonPatch = new NinePatch(buttonTex, 24,24,24,24);
@@ -66,9 +72,13 @@ public class PlayerBarActor extends BaseActor {
             textButtonStyle.font = customFont;
             textButtonStyle.fontColor = Color.WHITE;
             attack = new TextButton("attack",textButtonStyle);
-            move = new TextButton("move",textButtonStyle);
-            table.add(attack);
-            table.add(move);
+            //move = new TextButton("move",textButtonStyle);
+            group.addActor(attack);
+            group.addActor(bonusText);
+            //table.add(move);
+
+            table.add(group);
+
         }
         this.addActor(table);
     }
@@ -76,6 +86,15 @@ public class PlayerBarActor extends BaseActor {
     @Override
     public void act(float delta) {
         super.act(delta);
+        if(player_mode!=gameScreen.mode){
+            player_mode=gameScreen.mode;
+            if(player_mode==1){
 
+            }
+        }
+
+    }
+    public void setBonus(int bonus){
+        bonusText.setText("Bonus : "+bonus);
     }
 }

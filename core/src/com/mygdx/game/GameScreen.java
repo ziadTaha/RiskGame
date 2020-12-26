@@ -57,8 +57,8 @@ public class GameScreen extends BaseScreen{
         mainStage.addActor(mapActor);
 
         Group group = new Group();
-        p1Bar = new PlayerBarActor(mainStage,1,p1);
-        p2Bar = new PlayerBarActor(mainStage,2,p2);
+        p1Bar = new PlayerBarActor(mainStage,1,p1,this);
+        p2Bar = new PlayerBarActor(mainStage,2,p2,this);
 
 
         group.addActor(p1Bar);
