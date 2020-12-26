@@ -4,13 +4,23 @@ import java.util.ArrayList;
 
 public class Territory {
 
+    private int id;
     private Agent agent;
     private int armySize = 0;
     private ArrayList<Territory> neighbors;
     private int bonusPercent;
 
-    public Territory() {
+    public Territory(int id) {
         neighbors = new ArrayList<>();
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Agent getAgent() {
@@ -43,5 +53,11 @@ public class Territory {
 
     public void setBonusPercent(int bonusPercent) {
         this.bonusPercent = bonusPercent;
+    }
+
+    public Territory getEmptyClone() {
+        Territory clone = new Territory(this.id);
+        clone.setArmySize(this.armySize);
+        return clone;
     }
 }
