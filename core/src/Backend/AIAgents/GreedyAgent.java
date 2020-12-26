@@ -19,11 +19,11 @@ public class GreedyAgent extends Agent {
 
     @Override
     public void attack() {
-        Agent enemy = null;
+        Agent enemy;
         if(getAgentID() == 1){
             enemy = GameManager.getInstance().getPlayer2();
         }else{
-            GameManager.getInstance().getPlayer1();
+            enemy = GameManager.getInstance().getPlayer1();
         }
         int enemyArmiesSize = enemy.getTotalArmiesOwned(); // need to find it
         int enemyTerritoriesSize = enemy.getTerritories().size(); // need to find it
@@ -33,7 +33,7 @@ public class GreedyAgent extends Agent {
                 enemyTerritoriesSize, ownedArmiesSize, enemyArmiesSize);
         Territory bestTo = null;
         Territory bestFrom = null;
-        double bestMoveHeuristic = -1;
+        double bestMoveHeuristic = 9999;
         for (Territory territory : getTerritories()) {
             for (Territory neighbour : territory.getNeighbors()) {
                 if (neighbour.getAgent() != this) {
@@ -46,7 +46,7 @@ public class GreedyAgent extends Agent {
                     newStateEnemyArmies = enemyArmiesSize - neighbour.getArmySize();
                     double stateHeuristic = attackHeuristic(newStateOwnedTerr,
                             newStateEnemyTerr, newStateOwnedArmies, newStateEnemyArmies);
-                    if (stateHeuristic > bestMoveHeuristic) {
+                    if (stateHeuristic < bestMoveHeuristic) {
                         bestMoveHeuristic = stateHeuristic;
                         bestFrom = territory;
                         bestTo = neighbour;
