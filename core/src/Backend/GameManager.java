@@ -11,6 +11,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Map;
 
 public class GameManager {
@@ -119,4 +120,6 @@ public class GameManager {
     public void setPlayer2(Agent player2) {
         this.player2 = player2;
     }
+
+
 }

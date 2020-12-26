@@ -7,8 +7,7 @@ import java.util.Random;
 public class Agent {
 
     private ArrayList<Territory> territories;
-
-
+    private int agentID; // 1 or 2
 
     public Agent(){
         territories = new ArrayList<>();
@@ -18,7 +17,6 @@ public class Agent {
 
         return Math.max(3, getTerritories().size()/ 3);
     }
-
 
     public void addArmies() {
         int bonus = calculateBonus();
@@ -97,10 +95,7 @@ public class Agent {
         this.getTerritories().add(territory);
     }
 
-    // need to be implemented
-    private void intializeTerritoriesAndArmies(){
 
-    }
 
     public void moveArmies(Territory from, Territory to, int armiesCount){
         // validation check
@@ -160,14 +155,9 @@ public class Agent {
         }
     }
 
-    protected double calculateHeuristicCost(int territoriesOwnedSize, int enemyTerritoriesSize,int armiesOwnedSize
-                                             ,int enemyArmiesSize){
-
-        return territoriesOwnedSize / enemyTerritoriesSize + armiesOwnedSize/enemyArmiesSize ;
-    }
 
     // find the adjacent enemy with the max armies
-   protected int getTotalArmiesOwned(){
+    protected int getTotalArmiesOwned(){
         int total = 0;
 
         for(Territory territory: getTerritories()){
@@ -176,7 +166,15 @@ public class Agent {
             }
         }
         return total;
-   }
+    }
+
+
+    protected double calculateHeuristicCost(int territoriesOwnedSize, int enemyTerritoriesSize,int armiesOwnedSize
+            ,int enemyArmiesSize){
+
+        return territoriesOwnedSize / enemyTerritoriesSize + armiesOwnedSize/enemyArmiesSize ;
+    }
+
 
 
 }
