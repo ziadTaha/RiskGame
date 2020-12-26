@@ -5,6 +5,7 @@ import Backend.AIAgents.GreedyAgent;
 import Backend.AIAgents.MinMaxAgent;
 import Backend.AIAgents.RealTimeAStarAgent;
 import Backend.models.Agent;
+import Backend.models.State;
 import Backend.models.Territory;
 import Backend.nonAIAgents.AggressiveAgent;
 import Backend.nonAIAgents.HumanAgent;
@@ -171,29 +172,25 @@ public class GameManager {
         this.player2 = player2;
     }
 
-    public Map<Integer, Territory> getGameMapClone() {
+    public State getStateClone(Agent player, Map<Integer, Territory> map) {
         Map<Integer, Territory> cloneMap = new HashMap<>();
-        Agent player1Clone = player1.getEmptyClone();
-        Agent player2Clone = player2.getEmptyClone();
+        Agent playerClone = player.getEmptyClone();
 
         // creating clone map carrying new territories with their agents (without neighbours)
-        for (Map.Entry<Integer, Territory> entry: gameMap.entrySet()) {
+        for (Map.Entry<Integer, Territory> entry: map.entrySet()) {
             Territory territory = entry.getValue();
             Territory terClone = territory.getEmptyClone();
-            if (territory.getAgent().getAgentID() == 1) {
-                terClone.setAgent(player1Clone);
-                player1Clone.addTerritory(terClone);
-            } else {
-                terClone.setAgent(player2Clone);
-                player2Clone.addTerritory(terClone);
+            if (territory.getAgent().getAgentID() == player.getAgentID()) {
+                terClone.setAgent(playerClone);
+                playerClone.addTerritory(terClone);
             }
             cloneMap.put(entry.getKey(), terClone);
         }
 
-        // add neighbours
+        // add neighbours (have nothing to do with states(same in all cases))
         for (Map.Entry<Integer, Territory> entry: cloneMap.entrySet()) {
             Territory curClone = entry.getValue();
-            Territory originalTerr = gameMap.get(entry.getKey());
+            Territory originalTerr = map.get(entry.getKey());
             ArrayList<Territory> cloneNeighbors = new ArrayList<>();
             for (Territory neighbour : originalTerr.getNeighbors()) {
                 int neighbourId = neighbour.getId();
@@ -202,7 +199,7 @@ public class GameManager {
             curClone.setNeighbors(cloneNeighbors);
         }
 
-        return cloneMap;
+        return new State(playerClone, cloneMap);
     }
 
 }
