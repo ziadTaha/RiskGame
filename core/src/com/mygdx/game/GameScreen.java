@@ -11,6 +11,11 @@ import com.badlogic.gdx.utils.Align;
 import com.mygdx.game.Actors.MapActor;
 import com.mygdx.game.Actors.PlayerBarActor;
 
+import java.util.Map;
+
+import Backend.GameManager;
+import Backend.models.Territory;
+
 public class GameScreen extends BaseScreen{
     private String map ;
     private String p1 ;
@@ -19,12 +24,16 @@ public class GameScreen extends BaseScreen{
     private PlayerBarActor p1Bar;
     private PlayerBarActor p2Bar;
     private MapActor mapActor;
+    private GameManager gameManager;
+    Map<Integer ,Territory> territoryMap;
     public GameScreen(Game game,String map,String p1,String p2) {
         super(game);
-        System.out.println("ss"+map);
         this.map=map;
         this.p1=p1;
         this.p2=p2;
+        gameManager=GameManager.getInstance();
+        gameManager.setMapType(map.toLowerCase());
+        territoryMap=gameManager.getGameMap();
         initialize();
     }
     @Override
