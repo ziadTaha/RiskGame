@@ -12,10 +12,6 @@ public class GreedyAgent extends Agent {
         super();
     }
 
-    @Override
-    public void addArmies() {
-        super.addArmies();
-    }
 
     @Override
     public void attack() {

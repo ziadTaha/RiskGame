@@ -1,10 +1,8 @@
 package Backend.AIAgents;
-
 import Backend.GameManager;
 import Backend.models.Agent;
 import Backend.models.State;
 import Backend.models.Territory;
-
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
@@ -67,7 +65,7 @@ public class AStarAgent extends Agent {
                         double G_n = newState.getCurrentPlayer().attackCost(newState.getGameMap().get(territory.getId()).getArmySize(),
                                 newState.getGameMap().get(neighbour.getId()).getArmySize());
                         newState.setH_n(H_n);
-                        newState.setG_n(newState.getG_n() + G_n);
+                        newState.setG_n(currentState.getG_n() + G_n);
                         pq.add(newState);
                     }
                 }
