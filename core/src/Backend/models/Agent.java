@@ -1,6 +1,7 @@
 package Backend.models;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Random;
 
 public class Agent {
@@ -12,8 +13,70 @@ public class Agent {
     }
 
     public void addArmies() {
+        int bonus = calculateBonus();
+        int bonusCount = bonus;
 
+        // calculate Normalized Border Security Ratio
+        // indicate the percent each territory needs from the additional armies to be added
+        // NBSRx (normalised bsr) = BSRx/sumBSR
+        int sumBSR = sumBSR();
+        for (Territory territory: territories) {
+            int NBSRx = borderSecurityRatio(territory) / sumBSR;
+            territory.setBonusPercent(NBSRx);
+        }
+        // sort territories descending by percent of bonus army
+        Collections.sort(territories, new Comparator<Territory>() {
+            @Override
+            public int compare(Territory t1, Territory t2) {
+                return t2.getBonusPercent() - t1.getBonusPercent();
+            }
+        });
+        // for now we calculated the percent of bonus for each territory
+        for (Territory territory: territories) {
+            if (bonusCount <= 0) break;
+            int curBonus = Math.round(territory.getBonusPercent() * bonus);
+            territory.setArmySize(territory.getArmySize() + curBonus);
+            bonusCount -= curBonus;
+        }
+        if (bonusCount > 0) {
+            territories.get(0).setArmySize(territories.get(0).getArmySize() + bonusCount);
+        }
     }
+
+    // calculate number of additional armies to be added
+    public int calculateBonus() {
+        return Math.max(territories.size()/3, 3);
+    }
+
+    // border security threat: sum of surrounding enemy armies
+    private int borderSecurityThreat(Territory curTerritory) {
+        int bst = 0;
+        ArrayList<Territory> neighbours = curTerritory.getNeighbors();
+        for (Territory neighbour: neighbours) {
+            if (neighbour.getAgent() != this)
+                bst += neighbour.getArmySize();
+        }
+        return bst;
+    }
+
+    // border security ratio: indicate the level of danger this territory is in,
+    // as it go high it means we might easily loose this territory
+    // bst = border security threat / army size in this territory
+    private int borderSecurityRatio(Territory curTerritory) {
+        int bst = borderSecurityThreat(curTerritory);
+        int bsr = bst / curTerritory.getArmySize();
+        return bsr;
+    }
+
+    // sum of border security ratios for all my territories
+    private int sumBSR() {
+        int sumBSR = 0;
+        for (Territory territory: territories) {
+            sumBSR += borderSecurityRatio(territory);
+        }
+        return sumBSR;
+    }
+
     public void attack() {
     }
 

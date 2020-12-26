@@ -4,12 +4,12 @@ import java.util.ArrayList;
 
 public class Territory {
 
-
     private String name;
     private Agent agent;
     private int owner;
     private int armySize;
     private ArrayList<Territory> neighbors;
+    private int bonusPercent;
 
     public Territory() {
         neighbors = new ArrayList<>();
@@ -54,5 +54,13 @@ public class Territory {
 
     public void setNeighbors(ArrayList<Territory> neighbors) {
         this.neighbors = neighbors;
+    }
+
+    public int getBonusPercent() {
+        return bonusPercent;
+    }
+
+    public void setBonusPercent(int bonusPercent) {
+        this.bonusPercent = bonusPercent;
     }
 }
