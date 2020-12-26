@@ -17,7 +17,7 @@ public class PlayerChooserActor extends BaseActor{
     private Button leftArrow,rightArrow;
     private Label playerTypes;
     private int cur ;
-    final String[] types={"AI1","AI2","AI3","AI4","AI5","AI6","AI7","Human"};
+    final String[] types={"AI1","AI2","AI3","AI4","Passive","Aggressive","Pacifist","Human"};
     public PlayerChooserActor(float x, float y, Stage s) {
         super(x, y, s);
         Button.ButtonStyle buttonStyleLeft = new Button.ButtonStyle();

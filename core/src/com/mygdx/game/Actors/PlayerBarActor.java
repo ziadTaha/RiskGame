@@ -33,7 +33,7 @@ public class PlayerBarActor extends BaseActor {
         this.type=type;
         if(p == 1){
             background = new Image(new Texture(Gdx.files.internal("ui_elements/player_bar1.png")));
-            background.setWidth(1024);
+
         }
         else
         {
@@ -56,12 +56,14 @@ public class PlayerBarActor extends BaseActor {
         Group group = new Group();
 
         Table table = new Table();
+        table.align(Align.left);
+        table.padLeft(40);
         table.setBackground(background.getDrawable());
         table.setHeight(200);
         table.setWidth(1280);
 
         //table.align(Align.left);
-        table.add(player).align((Align.topLeft));
+        table.add(player).align(Align.left);
         table.row();
         table.add(playerType);
         table.add(attack);

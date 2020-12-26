@@ -12,6 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class GameManager {
@@ -32,6 +33,7 @@ public class GameManager {
     public void setMapType(String country) {
         int n = 0;
         String fileName = country + ".txt";
+        gameMap=new HashMap<>();
         if(country.equals("egypt")){ // 27 territory
             n = 27;
         }else if(country.equals("usa")){

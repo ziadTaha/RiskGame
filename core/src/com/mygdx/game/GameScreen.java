@@ -15,12 +15,15 @@ import java.util.Map;
 
 import Backend.GameManager;
 import Backend.models.Territory;
+import Backend.models.Agent;
 
 public class GameScreen extends BaseScreen{
     private String map ;
     private String p1 ;
     private  String p2;
     int cur ;
+    private Agent agent1 ;
+
     private PlayerBarActor p1Bar;
     private PlayerBarActor p2Bar;
     private MapActor mapActor;
