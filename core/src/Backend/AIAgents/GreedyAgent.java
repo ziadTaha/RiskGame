@@ -12,17 +12,13 @@ public class GreedyAgent extends Agent {
         super();
     }
 
-    @Override
-    public void addArmies() {
-        super.addArmies();
-    }
 
     @Override
     public void attack() {
         Agent enemy;
-        if(getAgentID() == 1){
+        if (getAgentID() == 1) {
             enemy = GameManager.getInstance().getPlayer2();
-        }else{
+        } else {
             enemy = GameManager.getInstance().getPlayer1();
         }
         int enemyArmiesSize = enemy.getTotalArmiesOwned(); // need to find it
@@ -36,12 +32,10 @@ public class GreedyAgent extends Agent {
         double bestMoveHeuristic = 9999;
         for (Territory territory : getTerritories()) {
             for (Territory neighbour : territory.getNeighbors()) {
-                if (neighbour.getAgent() != this) {
-                    int newStateEnemyTerr = 0, newStateEnemyArmies = 0, newStateOwnedTerr = 0, newStateOwnedArmies = 0;
-                    if (territory.getArmySize() - 1 > neighbour.getArmySize()) {
-                        newStateOwnedTerr = ownedTerritoriesSize + 1;
-                        newStateEnemyTerr = enemyTerritoriesSize - 1;
-                    }
+                if (neighbour.getAgent() != this && territory.getArmySize() - 1 > neighbour.getArmySize()) {
+                    int newStateEnemyTerr, newStateEnemyArmies, newStateOwnedTerr, newStateOwnedArmies;
+                    newStateOwnedTerr = ownedTerritoriesSize + 1;
+                    newStateEnemyTerr = enemyTerritoriesSize - 1;
                     newStateOwnedArmies = ownedArmiesSize - neighbour.getArmySize();
                     newStateEnemyArmies = enemyArmiesSize - neighbour.getArmySize();
                     double stateHeuristic = attackHeuristic(newStateOwnedTerr,
@@ -56,7 +50,7 @@ public class GreedyAgent extends Agent {
         }
         // declare attack
         if (bestMoveHeuristic > currentHeuristic) {
-            declareAttack(bestFrom , bestTo, 3, 2);
+            declareAttack(bestFrom, bestTo, 3, 2);
         }
         // else there will be no attack
     }

@@ -17,7 +17,7 @@ public class PacifistAgent extends Agent {
                 fewestArmiesTerritory = ownedTerritory;
         }
         // adding bonus armies to the territory with the fewest armies
-        int bonusArmies =  countBonusArmies();
+        int bonusArmies =  calculateBonus();
         fewestArmiesTerritory.setArmySize(fewestArmiesTerritory.getArmySize() + bonusArmies);
         attackingTerritory = fewestArmiesTerritory;
     }
