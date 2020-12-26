@@ -15,12 +15,16 @@ import java.util.Map;
 
 import Backend.GameManager;
 import Backend.models.Territory;
+import Backend.models.Agent;
 
 public class GameScreen extends BaseScreen{
     private String map ;
     private String p1 ;
     private  String p2;
     int cur ;
+    public int mode ;
+    private Agent agent1 ;
+    private Agent agent2;
     private PlayerBarActor p1Bar;
     private PlayerBarActor p2Bar;
     private MapActor mapActor;
@@ -31,9 +35,14 @@ public class GameScreen extends BaseScreen{
         this.map=map;
         this.p1=p1;
         this.p2=p2;
+        mode = 0;
+        cur=1;
         gameManager=GameManager.getInstance();
         gameManager.setMapType(map.toLowerCase());
         territoryMap=gameManager.getGameMap();
+        gameManager.setPlayersType(p1,p2);
+        agent1=gameManager.getPlayer1();
+        agent2=gameManager.getPlayer2();
         initialize();
     }
     @Override
@@ -48,8 +57,8 @@ public class GameScreen extends BaseScreen{
         mainStage.addActor(mapActor);
 
         Group group = new Group();
-        p1Bar = new PlayerBarActor(mainStage,1,p1);
-        p2Bar = new PlayerBarActor(mainStage,2,p2);
+        p1Bar = new PlayerBarActor(mainStage,1,p1,this);
+        p2Bar = new PlayerBarActor(mainStage,2,p2,this);
 
 
         group.addActor(p1Bar);
