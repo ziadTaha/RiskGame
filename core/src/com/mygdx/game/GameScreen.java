@@ -22,6 +22,7 @@ public class GameScreen extends BaseScreen{
     private String p1 ;
     private  String p2;
     int cur ;
+    int temp ;
     public int mode ;
     private Agent agent1 ;
     private Agent agent2;
@@ -29,6 +30,9 @@ public class GameScreen extends BaseScreen{
     private PlayerBarActor p2Bar;
     private MapActor mapActor;
     private GameManager gameManager;
+    private boolean bonus_flag;
+    private int bonus;
+
     Map<Integer ,Territory> territoryMap;
     public GameScreen(Game game,String map,String p1,String p2) {
         super(game);
@@ -36,7 +40,7 @@ public class GameScreen extends BaseScreen{
         this.p1=p1;
         this.p2=p2;
         mode = 0;
-        cur=1;
+        temp = 0;
         gameManager=GameManager.getInstance();
         gameManager.setMapType(map.toLowerCase());
         territoryMap=gameManager.getGameMap();
@@ -82,4 +86,12 @@ public class GameScreen extends BaseScreen{
             p2Bar.setVisible(true);
         }
     }
+    public int getBonus() {
+        return bonus;
+    }
+
+    public void setBonus(int bonus) {
+        this.bonus = bonus;
+    }
+
 }

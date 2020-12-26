@@ -23,7 +23,7 @@ public class PlayerBarActor extends BaseActor {
     private int p ;
     private String type;
     private TextButton attack;
-    private TextButton move;
+    private TextButton end;
     private Image background;
     private Label player;
     private Label playerType;
@@ -72,10 +72,14 @@ public class PlayerBarActor extends BaseActor {
             textButtonStyle.font = customFont;
             textButtonStyle.fontColor = Color.WHITE;
             attack = new TextButton("attack",textButtonStyle);
-            //move = new TextButton("move",textButtonStyle);
-            group.addActor(attack);
+            end = new TextButton("end",textButtonStyle);
+            Table table1 = new Table();
+            table1.padLeft(500);
+            table1.add(attack);
+            table1.add(end);
+            group.addActor(table1);
             group.addActor(bonusText);
-            //table.add(move);
+
 
             table.add(group);
 
@@ -89,7 +93,14 @@ public class PlayerBarActor extends BaseActor {
         if(player_mode!=gameScreen.mode){
             player_mode=gameScreen.mode;
             if(player_mode==1){
-
+                attack.setVisible(false);
+                end.setVisible(false);
+                bonusText.setVisible(true);
+            }
+            else{
+                attack.setVisible(true);
+                end.setVisible(true);
+                bonusText.setVisible(false);
             }
         }
 
