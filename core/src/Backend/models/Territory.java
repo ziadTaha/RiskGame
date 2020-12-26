@@ -7,7 +7,7 @@ public class Territory {
     private String name;
     private Agent agent;
     private int owner;
-    private int armySize;
+    private int armySize = 0;
     private ArrayList<Territory> neighbors;
     private int bonusPercent;
 

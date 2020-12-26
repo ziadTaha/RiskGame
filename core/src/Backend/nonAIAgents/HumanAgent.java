@@ -11,7 +11,6 @@ public class HumanAgent extends Agent {
         super();
     }
 
-    @Override
     public void addArmies(Territory territory, int armiesCount) {
         //check territory whether to be owned or not
         if (territory.getAgent() != this) {
@@ -22,7 +21,7 @@ public class HumanAgent extends Agent {
     }
 
     /** attacker dice count is 1, 2 or 3 & defender dice count is 1 or 2 **/
-    @Override
+
     public void attack(Territory from, Territory to, int attackDiceCount, int defendDiceCount) {
         //check adjacency of two territories
         boolean isAdjacent = false;

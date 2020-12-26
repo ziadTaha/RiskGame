@@ -8,21 +8,19 @@ public class AggressiveAgent extends Agent {
         super();
     }
 
-    @Override
+
     public void addArmies() {
         Territory mostArmiesTerritory = this.getTerritories().get(0);
         for(Territory ownedTerritory: this.getTerritories()){
             if(ownedTerritory.getArmySize() > mostArmiesTerritory.getArmySize())
                 mostArmiesTerritory = ownedTerritory;
         }
-        // adding bonus armies s bonus armies to the territory with the most armies
-        int bonusArmies =  this.getTerritories().size() / 3;
-        if(bonusArmies< 3)
-            bonusArmies = 3;
+        // adding bonus armies to the territory with the most armies
+        int bonusArmies =  countBonusArmies();
         mostArmiesTerritory.setArmySize(mostArmiesTerritory.getArmySize() + bonusArmies);
     }
 
-    @Override
+
     public void attack() {
         Territory from;
         Territory to;

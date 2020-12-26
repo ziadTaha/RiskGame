@@ -8,9 +8,17 @@ public class Agent {
 
     private ArrayList<Territory> territories;
 
+
+
     public Agent(){
         territories = new ArrayList<>();
     }
+
+    public int countBonusArmies(){
+
+        return Math.max(3, getTerritories().size()/ 3);
+    }
+
 
     public void addArmies() {
         int bonus = calculateBonus();
@@ -78,13 +86,7 @@ public class Agent {
     }
 
     public void attack() {
-    }
 
-    // human case
-    public void addArmies(Territory territory, int armiesCount) {
-    }
-
-    public void attack(Territory from, Territory to, int attackDiceCount, int defendDiceCount) {
     }
 
     public ArrayList<Territory> getTerritories() {
@@ -106,7 +108,6 @@ public class Agent {
             throw new Error("source or destination or both territories are not owned by the player");
         if(armiesCount > from.getArmySize() -1 )
             throw new Error("1 army at least must stay at the source territory to defend it");
-
         from.setArmySize(from.getArmySize() - armiesCount);
         to.setArmySize(to.getArmySize() + armiesCount);
     }
@@ -145,6 +146,7 @@ public class Agent {
                     to.setArmySize(to.getArmySize() - 1);
                 } else { // attacker will lose one army
                     from.setArmySize(from.getArmySize() - 1);
+                    to.setArmySize((to.getArmySize() + 1)); // attacker lose the army to the defender
                 }
                 if (to.getArmySize() == 0) // all armies at the to Territory are defeated
                 {
@@ -157,4 +159,24 @@ public class Agent {
             }
         }
     }
+
+    protected double calculateHeuristicCost(int territoriesOwnedSize, int enemyTerritoriesSize,int armiesOwnedSize
+                                             ,int enemyArmiesSize){
+
+        return territoriesOwnedSize / enemyTerritoriesSize + armiesOwnedSize/enemyArmiesSize ;
+    }
+
+    // find the adjacent enemy with the max armies
+   protected int getTotalArmiesOwned(){
+        int total = 0;
+
+        for(Territory territory: getTerritories()){
+            if(territory.getAgent() != this){
+                total += territory.getArmySize();
+            }
+        }
+        return total;
+   }
+
+
 }
