@@ -14,7 +14,6 @@ public class Agent {
     }
 
     public int countBonusArmies(){
-
         return Math.max(3, getTerritories().size()/ 3);
     }
 
@@ -91,7 +90,19 @@ public class Agent {
         return territories;
     }
 
-    private void addTerritory(Territory territory) {
+    public void setTerritories(ArrayList<Territory> territories) {
+        this.territories = territories;
+    }
+
+    public int getAgentID() {
+        return agentID;
+    }
+
+    public void setAgentID(int agentID) {
+        this.agentID = agentID;
+    }
+
+    public void addTerritory(Territory territory) {
         this.getTerritories().add(territory);
     }
 
@@ -176,5 +187,10 @@ public class Agent {
     }
 
 
+    public Agent getEmptyClone() {
+        Agent clone = new Agent();
+        clone.setAgentID(this.agentID);
+        return clone;
+    }
 
 }

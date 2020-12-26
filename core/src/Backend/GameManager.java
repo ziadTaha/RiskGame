@@ -1,5 +1,9 @@
 package Backend;
 
+import Backend.AIAgents.AStarAgent;
+import Backend.AIAgents.GreedyAgent;
+import Backend.AIAgents.MinMaxAgent;
+import Backend.AIAgents.RealTimeAStarAgent;
 import Backend.models.Agent;
 import Backend.models.Territory;
 import Backend.nonAIAgents.AggressiveAgent;
@@ -14,6 +18,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 public class GameManager {
     private static GameManager single_instance = null;
@@ -31,6 +36,7 @@ public class GameManager {
 
     // initialization of the map  from external text file according to the country chosen
     public void setMapType(String country) {
+        gameMap = new HashMap<>();
         int n = 0;
         String fileName = country + ".txt";
         gameMap=new HashMap<>();
@@ -42,7 +48,7 @@ public class GameManager {
             //error
         }
         for (int i = 1; i <= n; i++) {
-            gameMap.put(i, new Territory());
+            gameMap.put(i, new Territory(i));
         }
         fillMap(fileName);
     }
@@ -74,18 +80,19 @@ public class GameManager {
         } else {
             player2 = initiateAgent(type);
         }
+        armiesPlacement();
     }
 
     private Agent initiateAgent(String type) {
         switch (type) {
             case "AI1":
-                return null;    // TODO return greedy agent
+                return new GreedyAgent();
             case "AI2":
-                return null;    // TODO return A* agent
+                return new AStarAgent();
             case "AI3":
-                return null;    // TODO return A* realtime agent
+                return new RealTimeAStarAgent();
             case "AI4":
-                return null;    // TODO return minMax agent
+                return new MinMaxAgent();
             case "Human":
                 return new HumanAgent();
             case "Passive":
@@ -96,6 +103,48 @@ public class GameManager {
                 return new PacifistAgent();
             default:
                 return null;
+        }
+    }
+
+    private void armiesPlacement() {
+        int n1 = 20, n2 = 20;
+        int n = gameMap.size();
+        int terrLeft = n;
+        Random rand = new Random();
+        while (n1 != 0) {
+            int randomInt = rand.nextInt(n) + 1;
+            while (gameMap.get(randomInt).getAgent() != null) {
+                randomInt = rand.nextInt(n) + 1;
+            }
+            Territory territory = gameMap.get(randomInt);
+            territory.setAgent(player1);
+            player1.addTerritory(territory);
+            int randomSize = rand.nextInt(n1) + 1;
+            territory.setArmySize(randomSize);
+            n1 -= randomSize;
+            terrLeft--;
+        }
+        while (n2 != 0) {
+            if (terrLeft == 0)
+                break;
+            int randomInt = rand.nextInt(n) + 1;
+            while (gameMap.get(randomInt).getAgent() != null) {
+                randomInt = rand.nextInt(n) + 1;
+            }
+            Territory territory = gameMap.get(randomInt);
+            territory.setAgent(player2);
+            player2.addTerritory(territory);
+            int randomSize = rand.nextInt(n2) + 1;
+            territory.setArmySize(randomSize);
+            n2 -= randomSize;
+            terrLeft--;
+        }
+        if (terrLeft == 0 && n2 > 0) {
+            if (n2 > 0) {
+                Territory firstTerr = player2.getTerritories().get(0);
+                firstTerr.setArmySize(firstTerr.getArmySize() + n2);
+                n2 = 0;
+            }
         }
     }
 
@@ -123,5 +172,38 @@ public class GameManager {
         this.player2 = player2;
     }
 
+    public Map<Integer, Territory> getGameMapClone() {
+        Map<Integer, Territory> cloneMap = new HashMap<>();
+        Agent player1Clone = player1.getEmptyClone();
+        Agent player2Clone = player2.getEmptyClone();
+
+        // creating clone map carrying new territories with their agents (without neighbours)
+        for (Map.Entry<Integer, Territory> entry: gameMap.entrySet()) {
+            Territory territory = entry.getValue();
+            Territory terClone = territory.getEmptyClone();
+            if (territory.getAgent().getAgentID() == 1) {
+                terClone.setAgent(player1Clone);
+                player1Clone.addTerritory(terClone);
+            } else {
+                terClone.setAgent(player2Clone);
+                player2Clone.addTerritory(terClone);
+            }
+            cloneMap.put(entry.getKey(), terClone);
+        }
+
+        // add neighbours
+        for (Map.Entry<Integer, Territory> entry: cloneMap.entrySet()) {
+            Territory curClone = entry.getValue();
+            Territory originalTerr = gameMap.get(entry.getKey());
+            ArrayList<Territory> cloneNeighbors = new ArrayList<>();
+            for (Territory neighbour : originalTerr.getNeighbors()) {
+                int neighbourId = neighbour.getId();
+                cloneNeighbors.add(cloneMap.get(neighbourId));
+            }
+            curClone.setNeighbors(cloneNeighbors);
+        }
+
+        return cloneMap;
+    }
 
 }
