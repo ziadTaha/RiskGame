@@ -120,7 +120,7 @@ public class Agent {
         to.setArmySize(to.getArmySize() + armiesCount);
     }
 
-    protected void declareAttack(Territory from, Territory to, int attackDiceCount, int defendDiceCount){
+    public void declareAttack(Territory from, Territory to, int attackDiceCount, int defendDiceCount){
         //check attack Dice count
         if(attackDiceCount > from.getArmySize() - 1) // number of dice is more than allowed number of armies
             attackDiceCount = from.getArmySize() - 1;
@@ -182,20 +182,20 @@ public class Agent {
     }
 
     // may consider more parameters
-    protected double attackHeuristic(int territoriesOwnedSize, int enemyTerritoriesSize,int armiesOwnedSize
+    public double attackHeuristic(int territoriesOwnedSize, int enemyTerritoriesSize,int armiesOwnedSize
             ,int enemyArmiesSize){
         return enemyTerritoriesSize/ territoriesOwnedSize   + enemyArmiesSize / armiesOwnedSize ;
     }
 
-    protected double attackCost(int attackerArmies, int defenderArmies, int numberOdMoves){
+    public double attackCost(int attackerArmies, int defenderArmies){
         return attackerArmies / defenderArmies;
     }
 
-    protected double moveHeuristic(int ownedBorderArmies, int enemyBorderArmies){
+    public double moveHeuristic(int ownedBorderArmies, int enemyBorderArmies){
         return enemyBorderArmies / ownedBorderArmies;
     }
 
-    protected double moveCost(int numberOfMoves){
+    public double moveCost(int numberOfMoves){
         return numberOfMoves;
     }
 
