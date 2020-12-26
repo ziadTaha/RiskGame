@@ -2,6 +2,10 @@ package Backend;
 
 import Backend.models.Agent;
 import Backend.models.Territory;
+import Backend.nonAIAgents.AggressiveAgent;
+import Backend.nonAIAgents.HumanAgent;
+import Backend.nonAIAgents.PacifistAgent;
+import Backend.nonAIAgents.PassiveAgent;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -58,6 +62,37 @@ public class GameManager {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void setPlayerType(String type, int playerNo) {
+        if (playerNo == 1) {
+            player1 = initiateAgent(type);
+        } else {
+            player2 = initiateAgent(type);
+        }
+    }
+
+    private Agent initiateAgent(String type) {
+        switch (type) {
+            case "AI1":
+                return null;    // TODO return greedy agent
+            case "AI2":
+                return null;    // TODO return A* agent
+            case "AI3":
+                return null;    // TODO return A* realtime agent
+            case "AI4":
+                return null;    // TODO return minMax agent
+            case "Human":
+                return new HumanAgent();
+            case "Passive":
+                return new PassiveAgent();
+            case "Aggressive":
+                return new AggressiveAgent();
+            case "Pacifist":
+                return new PacifistAgent();
+            default:
+                return null;
         }
     }
 
