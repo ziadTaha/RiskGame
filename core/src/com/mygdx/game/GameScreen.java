@@ -22,8 +22,9 @@ public class GameScreen extends BaseScreen{
     private String p1 ;
     private  String p2;
     int cur ;
+    public int mode ;
     private Agent agent1 ;
-
+    private Agent agent2;
     private PlayerBarActor p1Bar;
     private PlayerBarActor p2Bar;
     private MapActor mapActor;
@@ -34,9 +35,15 @@ public class GameScreen extends BaseScreen{
         this.map=map;
         this.p1=p1;
         this.p2=p2;
+        mode = 0;
+        cur=1;
         gameManager=GameManager.getInstance();
         gameManager.setMapType(map.toLowerCase());
         territoryMap=gameManager.getGameMap();
+        gameManager.setPlayerType(p1,1);
+        gameManager.setPlayerType(p2,2);
+        agent1=gameManager.getPlayer1();
+        agent2=gameManager.getPlayer2();
         initialize();
     }
     @Override

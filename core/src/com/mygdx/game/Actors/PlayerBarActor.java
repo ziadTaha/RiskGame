@@ -44,15 +44,7 @@ public class PlayerBarActor extends BaseActor {
         label1Style.font = myFont;
         player= new Label("player"+p,label1Style);
         playerType = new Label(type,label1Style);
-        TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
-        Texture buttonTex = new Texture( Gdx.files.internal("ui_elements/button_purble.png") );
-        NinePatch buttonPatch = new NinePatch(buttonTex, 24,24,24,24);
-        textButtonStyle.up = new NinePatchDrawable( buttonPatch );
-        BitmapFont customFont = new BitmapFont( Gdx.files.internal("fonts/arial.fnt") );
-        textButtonStyle.font = customFont;
-        textButtonStyle.fontColor = Color.WHITE;
-        attack = new TextButton("attack",textButtonStyle);
-        move = new TextButton("move",textButtonStyle);
+
         Group group = new Group();
 
         Table table = new Table();
@@ -61,13 +53,29 @@ public class PlayerBarActor extends BaseActor {
         table.setBackground(background.getDrawable());
         table.setHeight(200);
         table.setWidth(1280);
-
         //table.align(Align.left);
         table.add(player).align(Align.left);
         table.row();
         table.add(playerType);
-        table.add(attack);
-        table.add(move);
+        if(type.equals("Human")) {
+            TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
+            Texture buttonTex = new Texture( Gdx.files.internal("ui_elements/button_purble.png") );
+            NinePatch buttonPatch = new NinePatch(buttonTex, 24,24,24,24);
+            textButtonStyle.up = new NinePatchDrawable( buttonPatch );
+            BitmapFont customFont = new BitmapFont( Gdx.files.internal("fonts/arial.fnt") );
+            textButtonStyle.font = customFont;
+            textButtonStyle.fontColor = Color.WHITE;
+            attack = new TextButton("attack",textButtonStyle);
+            move = new TextButton("move",textButtonStyle);
+            table.add(attack);
+            table.add(move);
+        }
         this.addActor(table);
+    }
+
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+
     }
 }
