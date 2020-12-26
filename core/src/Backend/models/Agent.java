@@ -64,6 +64,8 @@ public class Agent {
         return bst;
     }
 
+
+
     // border security ratio: indicate the level of danger this territory is in,
     // as it go high it means we might easily loose this territory
     // bst = border security threat / army size in this territory
@@ -125,6 +127,7 @@ public class Agent {
 
         if(defendDiceCount > to.getArmySize()) // number of dice of defender is more than number of armies
             defendDiceCount = to.getArmySize();
+
         if(to.getAgent() == null){
             to.setAgent(this);
             to.setArmySize(1);
@@ -168,9 +171,8 @@ public class Agent {
 
 
     // find the adjacent enemy with the max armies
-    protected int getTotalArmiesOwned(){
+    public int getTotalArmiesOwned(){
         int total = 0;
-
         for(Territory territory: getTerritories()){
             if(territory.getAgent() != this){
                 total += territory.getArmySize();
@@ -179,18 +181,27 @@ public class Agent {
         return total;
     }
 
-
-    protected double calculateHeuristicCost(int territoriesOwnedSize, int enemyTerritoriesSize,int armiesOwnedSize
+    // may consider more parameters
+    protected double attackHeuristic(int territoriesOwnedSize, int enemyTerritoriesSize,int armiesOwnedSize
             ,int enemyArmiesSize){
-
-        return territoriesOwnedSize / enemyTerritoriesSize + armiesOwnedSize/enemyArmiesSize ;
+        return enemyTerritoriesSize/ territoriesOwnedSize   + enemyArmiesSize / armiesOwnedSize ;
     }
 
+    protected double attackCost(int attackerArmies, int defenderArmies, int numberOdMoves){
+        return attackerArmies / defenderArmies;
+    }
+
+    protected double moveHeuristic(int ownedBorderArmies, int enemyBorderArmies){
+        return enemyBorderArmies / ownedBorderArmies;
+    }
+
+    protected double moveCost(int numberOfMoves){
+        return numberOfMoves;
+    }
 
     public Agent getEmptyClone() {
         Agent clone = new Agent();
         clone.setAgentID(this.agentID);
         return clone;
     }
-
 }
