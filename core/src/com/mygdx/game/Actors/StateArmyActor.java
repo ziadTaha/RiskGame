@@ -15,6 +15,7 @@ public class StateArmyActor extends BaseActor{
     private TextButton army_count;
     private int count ;
     private StateActor stateActor;
+    private int mode ;
     public StateArmyActor(float x, float y, Stage s, final StateActor stateActor) {
         super(s);
         this.stateActor = stateActor;
@@ -25,6 +26,7 @@ public class StateArmyActor extends BaseActor{
         NinePatch buttonPatch = new NinePatch(buttonTex, 0,0,0,0);
         textButtonStyle.up = new NinePatchDrawable( buttonPatch );
         count=stateActor.getCount();
+        mode =0 ;
         army_count= new TextButton(String.valueOf(count),textButtonStyle);
         army_count.setPosition(stateActor.getWidth()/2+x,120+y+stateActor.getHeight()/2);
         army_count.addListener(new EventListener() {
@@ -40,5 +42,9 @@ public class StateArmyActor extends BaseActor{
         });
 
         this.addActor(army_count);
+    }
+
+    public void setMode(int mode) {
+        this.mode = mode;
     }
 }
