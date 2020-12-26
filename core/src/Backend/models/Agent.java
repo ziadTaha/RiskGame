@@ -11,10 +11,7 @@ public class Agent {
 
     public Agent(){
         territories = new ArrayList<>();
-    }
-
-    public int countBonusArmies(){
-        return Math.max(3, getTerritories().size()/ 3);
+        agentID = 0;
     }
 
     public void addArmies() {
@@ -173,10 +170,8 @@ public class Agent {
     // find the adjacent enemy with the max armies
     public int getTotalArmiesOwned(){
         int total = 0;
-        for(Territory territory: getTerritories()){
-            if(territory.getAgent() != this){
-                total += territory.getArmySize();
-            }
+        for(Territory territory: territories){
+            total += territory.getArmySize();
         }
         return total;
     }

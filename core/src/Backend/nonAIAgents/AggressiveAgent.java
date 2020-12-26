@@ -16,7 +16,7 @@ public class AggressiveAgent extends Agent {
                 mostArmiesTerritory = ownedTerritory;
         }
         // adding bonus armies to the territory with the most armies
-        int bonusArmies =  countBonusArmies();
+        int bonusArmies =  calculateBonus();
         mostArmiesTerritory.setArmySize(mostArmiesTerritory.getArmySize() + bonusArmies);
     }
 

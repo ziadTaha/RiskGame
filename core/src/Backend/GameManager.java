@@ -77,7 +77,9 @@ public class GameManager {
 
     public void setPlayersType(String type1, String type2) {
         player1 = initiateAgent(type1);
+        player1.setAgentID(1);
         player2 = initiateAgent(type2);
+        player2.setAgentID(2);
         armiesPlacement();
     }
 

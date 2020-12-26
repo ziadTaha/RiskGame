@@ -16,7 +16,7 @@ public class PassiveAgent extends Agent {
                 fewestArmiesTerritory = ownedTerritory;
         }
         // adding bonus armies to the territory with the fewest armies
-        int bonusArmies =  countBonusArmies() / 3;
+        int bonusArmies =  calculateBonus();
         fewestArmiesTerritory.setArmySize(fewestArmiesTerritory.getArmySize() + bonusArmies);
     }
 }
