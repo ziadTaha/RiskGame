@@ -79,8 +79,9 @@ public class PlayerBarActor extends BaseActor {
             table1.add(end);
             group.addActor(table1);
             group.addActor(bonusText);
-
-
+            attack.setVisible(false);
+            end.setVisible(false);
+            bonusText.setVisible(true);
             table.add(group);
 
         }
@@ -92,16 +93,23 @@ public class PlayerBarActor extends BaseActor {
         super.act(delta);
         if(player_mode!=gameScreen.mode){
             player_mode=gameScreen.mode;
-            if(player_mode==1){
-                attack.setVisible(false);
-                end.setVisible(false);
-                bonusText.setVisible(true);
+            if(type.equals("Human")){
+                System.out.println(player_mode+" "+type);
+                if(player_mode==1){
+                    attack.setVisible(false);
+                    end.setVisible(false);
+                    bonusText.setVisible(true);
+                }
+                else{
+                    attack.setVisible(true);
+                    end.setVisible(true);
+                    bonusText.setVisible(false);
+                }
             }
-            else{
-                attack.setVisible(true);
-                end.setVisible(true);
-                bonusText.setVisible(false);
-            }
+
+        }
+        else if(player_mode==1){
+            bonusText.setText(gameScreen.getBonus());
         }
 
     }

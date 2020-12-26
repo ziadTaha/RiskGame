@@ -14,6 +14,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.mygdx.game.GameScreen;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,7 +28,8 @@ public class MapActor extends Group {
     private OrthographicCamera tiledCamera;
     private OrthoCachedTiledMapRenderer tiledMapRenderer;
     Map<String,StateActor> map ;
-    public MapActor(String filename, Stage theStage)
+    GameScreen gameScreen;
+    public MapActor(String filename, Stage theStage, GameScreen gameScreen)
     {
 // set up tile map, renderer, and camera
         tiledMap = new TmxMapLoader().load("maps/"+filename+"/tilemap.tmx");
@@ -43,6 +45,7 @@ public class MapActor extends Group {
         tiledCamera = new OrthographicCamera();
         tiledCamera.setToOrtho(false, 1280, 720);
         tiledCamera.update();
+        this.gameScreen =gameScreen;
         map = new HashMap<>();
         List<MapObject> list = getTileList();
 
@@ -56,8 +59,10 @@ public class MapActor extends Group {
         for(MapObject o : list){
             StateActor stateActor = map.get(o.getName());
 
-            StateArmyActor stateArmyActor = new StateArmyActor(((TiledMapTileMapObject) o).getX(),((TiledMapTileMapObject) o).getY(),theStage,stateActor);
+            StateArmyActor stateArmyActor = new StateArmyActor(((TiledMapTileMapObject) o).getX(),((TiledMapTileMapObject) o).getY(),theStage,stateActor,
+                    gameScreen.getTerritoryMap().get(Integer.valueOf(o.getName())),gameScreen);
             this.addActor(stateArmyActor);
+            gameScreen.getStateArmyActorMap().put(Integer.valueOf(o.getName()),stateArmyActor);
 
         }
         theStage.addActor(this);
