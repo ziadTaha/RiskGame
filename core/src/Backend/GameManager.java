@@ -75,12 +75,9 @@ public class GameManager {
         }
     }
 
-    public void setPlayerType(String type, int playerNo) {
-        if (playerNo == 1) {
-            player1 = initiateAgent(type);
-        } else {
-            player2 = initiateAgent(type);
-        }
+    public void setPlayersType(String type1, String type2) {
+        player1 = initiateAgent(type1);
+        player2 = initiateAgent(type2);
         armiesPlacement();
     }
 

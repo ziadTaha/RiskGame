@@ -40,8 +40,7 @@ public class GameScreen extends BaseScreen{
         gameManager=GameManager.getInstance();
         gameManager.setMapType(map.toLowerCase());
         territoryMap=gameManager.getGameMap();
-        gameManager.setPlayerType(p1,1);
-        gameManager.setPlayerType(p2,2);
+        gameManager.setPlayersType(p1,p2);
         agent1=gameManager.getPlayer1();
         agent2=gameManager.getPlayer2();
         initialize();
