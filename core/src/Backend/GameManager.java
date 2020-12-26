@@ -170,17 +170,21 @@ public class GameManager {
         this.player2 = player2;
     }
 
-    public State getStateClone(Agent player, Map<Integer, Territory> map) {
+    public State getStateClone(Agent currentPlayer, Agent otherPlayer, Map<Integer, Territory> map) {
         Map<Integer, Territory> cloneMap = new HashMap<>();
-        Agent playerClone = player.getEmptyClone();
+        Agent curPlayerClone = currentPlayer.getEmptyClone();
+        Agent otherPlayerClone = otherPlayer.getEmptyClone();
 
         // creating clone map carrying new territories with their agents (without neighbours)
         for (Map.Entry<Integer, Territory> entry: map.entrySet()) {
             Territory territory = entry.getValue();
             Territory terClone = territory.getEmptyClone();
-            if (territory.getAgent().getAgentID() == player.getAgentID()) {
-                terClone.setAgent(playerClone);
-                playerClone.addTerritory(terClone);
+            if (territory.getAgent().getAgentID() == curPlayerClone.getAgentID()) {
+                terClone.setAgent(curPlayerClone);
+                curPlayerClone.addTerritory(terClone);
+            } else if (territory.getAgent().getAgentID() == otherPlayerClone.getAgentID()) {
+                terClone.setAgent(otherPlayerClone);
+                otherPlayerClone.addTerritory(terClone);
             }
             cloneMap.put(entry.getKey(), terClone);
         }
@@ -197,7 +201,7 @@ public class GameManager {
             curClone.setNeighbors(cloneNeighbors);
         }
 
-        return new State(playerClone, cloneMap);
+        return new State(curPlayerClone, otherPlayerClone, cloneMap);
     }
 
 }
