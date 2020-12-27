@@ -148,6 +148,10 @@ public class GameManager {
         }
     }
 
+    public boolean checkGameEnd() {
+        return player1.getTerritories().size() == 0 || player2.getTerritories().size() == 0;
+    }
+
     public Map<Integer, Territory> getGameMap() {
         return gameMap;
     }
