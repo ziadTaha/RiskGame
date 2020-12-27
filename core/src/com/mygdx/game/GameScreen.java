@@ -160,4 +160,12 @@ public class GameScreen extends BaseScreen{
     public Map<Integer, StateArmyActor> getStateArmyActorMap() {
         return stateArmyActorMap;
     }
+
+    public Agent getAgent1() {
+        return agent1;
+    }
+
+    public Agent getAgent2() {
+        return agent2;
+    }
 }

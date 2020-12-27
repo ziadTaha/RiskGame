@@ -14,9 +14,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 
 public class StateActor extends BaseActor {
     private Image image;
-    private TextButton army_count;
-
-
     private int count ;
     private float height;
     private float width;
