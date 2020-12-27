@@ -64,67 +64,20 @@ public class AStarAgent extends Agent {
                         //System.out.println(territory.getId() + " " + neighbour.getId());
                         State newState = GameManager.getInstance().getStateClone(currentState.getCurrentPlayer(),
                                 currentState.getOtherPlayer(), currentState.getGameMap());
-//                        for(Map.Entry<Integer, Territory> entry : newState.getGameMap().entrySet()){
-//                            System.out.print(entry.getKey() + " " + entry.getValue().getArmySize() + " ");
-//                            if(entry.getValue().getAgent() != null ){
-//                                System.out.println(entry.getValue().getAgent().getAgentID());
-//                            }
-//                            else
-//                                System.out.println("no");
-//                        }
-//                        System.out.println("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
-
                         double G_n = newState.getCurrentPlayer().attackCost(newState.getGameMap().get(territory.getId()).getArmySize(),
                                 newState.getGameMap().get(neighbour.getId()).getArmySize());
-
                         newState.getCurrentPlayer().declareAttack(newState.getGameMap().get(territory.getId()),
                                 newState.getGameMap().get(neighbour.getId()), 3, 2);
-
-//                        for(Map.Entry<Integer, Territory> entry : newState.getGameMap().entrySet()){
-//                            System.out.print(entry.getKey() + " " + entry.getValue().getArmySize() + " ");
-//                            if(entry.getValue().getAgent() != null ){
-//                                System.out.println(entry.getValue().getAgent().getAgentID());
-//                            }
-//                            else
-//                                System.out.println("no");
-//                        }
-//                        System.out.println("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
-
                         double H_n = newState.getCurrentPlayer().attackHeuristic(newState.getCurrentPlayer().getTerritories().size(),
                                 newState.getOtherPlayer().getTerritories().size(),
                                 newState.getCurrentPlayer().getTotalArmiesOwned(),
                                 newState.getOtherPlayer().getTotalArmiesOwned());
-
                         newState.setH_n(H_n);
                         newState.setG_n(currentState.getG_n() + G_n);
-
                         pq.add(newState);
                     }
                 }
             }
         }
-    }
-
-    public void fortify(){
-        PriorityQueue<State> pq = new PriorityQueue<>(9999, new StateComparator());
-        Agent enemy;
-        if (getAgentID() == 1) {
-            enemy = GameManager.getInstance().getPlayer2();
-        } else {
-            enemy = GameManager.getInstance().getPlayer1();
-        }
-        State currentState = new State(this, enemy, GameManager.getInstance().getGameMap());
-        currentState.setH_n(moveHeuristic(0,0));//Todo
-        currentState.setG_n(0); //Todo
-        pq.add(currentState);
-        double currentF_n = currentState.getG_n() + currentState.getH_n();
-        while(!pq.isEmpty()){
-            currentState = pq.poll();
-
-        }
-
-
-
-
     }
 }
