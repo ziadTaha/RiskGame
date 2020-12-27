@@ -200,15 +200,16 @@ public class Agent {
     // may consider more parameters
     public double attackHeuristic(int territoriesOwnedSize, int enemyTerritoriesSize,int armiesOwnedSize
             ,int enemyArmiesSize){
-        return enemyTerritoriesSize/ territoriesOwnedSize + enemyArmiesSize / armiesOwnedSize ;
+        return ((double)enemyTerritoriesSize)/ territoriesOwnedSize + ((double)enemyArmiesSize) / armiesOwnedSize ;
     }
 
     public double attackCost(int attackerArmies, int defenderArmies){
-        return defenderArmies / attackerArmies;
+
+        return 0.01*((double)defenderArmies) / attackerArmies;
     }
 
     public double moveHeuristic(int ownedBorderArmies, int enemyBorderArmies){
-        return enemyBorderArmies / ownedBorderArmies; //Todo zero division check
+        return ((double)enemyBorderArmies) / ownedBorderArmies; //Todo zero division check
     }
 
     public double moveCost(int numberOfMoves){

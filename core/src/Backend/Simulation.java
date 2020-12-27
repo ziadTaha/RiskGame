@@ -12,7 +12,7 @@ public class Simulation {
 
         GameManager gameManager = GameManager.getInstance();
         gameManager.setMapType("egypt");
-        gameManager.setPlayersType("AI1", "Aggressive");
+        gameManager.setPlayersType("AI2", "Passive");
         Agent player1 = gameManager.getPlayer1();
         Agent player2 = gameManager.getPlayer2();
         Map<Integer, Territory> gameMap = gameManager.getGameMap();
@@ -76,7 +76,7 @@ public class Simulation {
 //            System.out.println("player2 territory id = "+ terr.getId()+" has armies = "+terr.getArmySize());
 //        }
         int counter = 0;
-        while ((player1.getTotalArmiesOwned() != 0 || player2.getTotalArmiesOwned() != 0 ) && counter++ < 200) {
+        while ((player1.getTotalArmiesOwned() != 0 || player2.getTotalArmiesOwned() != 0 ) && counter++ < 20) {
             System.out.print("player1 territories: ");
             for (Territory terr: player1.getTerritories()) {
                 System.out.print(terr.getId() + " "+"has armies = "+terr.getArmySize()+ "    ");
@@ -101,6 +101,5 @@ public class Simulation {
         System.out.println("player1 territories size = "+ player1.getTerritories().size());
         System.out.println("player2 army size = "+ player2.getTotalArmiesOwned());
         System.out.println("player2 territories size = "+ player2.getTerritories().size());
-
     }
 }

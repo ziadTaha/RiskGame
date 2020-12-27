@@ -63,39 +63,28 @@ public class RealTimeAStarAgent extends Agent {
                 for (Territory neighbour : territory.getNeighbors()) {
                     if (neighbour.getAgent() != currentState.getCurrentPlayer() && territory.getArmySize() - 1 > neighbour.getArmySize() &&
                             territory.getArmySize() > 1) {
-                        //System.out.println(territory.getId() + " " + neighbour.getId());
+
+
                         State newState = GameManager.getInstance().getStateClone(currentState.getCurrentPlayer(),
                                 currentState.getOtherPlayer(), currentState.getGameMap());
-//                        for(Map.Entry<Integer, Territory> entry : newState.getGameMap().entrySet()){
-//                            System.out.print(entry.getKey() + " " + entry.getValue().getArmySize() + " ");
-//                            if(entry.getValue().getAgent() != null ){
-//                                System.out.println(entry.getValue().getAgent().getAgentID());
-//                            }
-//                            else
-//                                System.out.println("no");
-//                        }
-//                        System.out.println("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+
 
                         double G_n = newState.getCurrentPlayer().attackCost(newState.getGameMap().get(territory.getId()).getArmySize(),
                                 newState.getGameMap().get(neighbour.getId()).getArmySize());
 
-                        newState.getCurrentPlayer().declareAttack(newState.getGameMap().get(territory.getId()),
-                                newState.getGameMap().get(neighbour.getId()), 3, 2);
-
-//                        for(Map.Entry<Integer, Territory> entry : newState.getGameMap().entrySet()){
-//                            System.out.print(entry.getKey() + " " + entry.getValue().getArmySize() + " ");
-//                            if(entry.getValue().getAgent() != null ){
-//                                System.out.println(entry.getValue().getAgent().getAgentID());
-//                            }
-//                            else
-//                                System.out.println("no");
-//                        }
-//                        System.out.println("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+                        Territory from = newState.getGameMap().get(territory.getId());
+                        Territory to = newState.getGameMap().get(neighbour.getId());
+                        newState.getCurrentPlayer().declareAttack(from, to, 3, 2);
+                        if(to.getAgent() == newState.getCurrentPlayer()){
+                            int maxThreat = newState.getCurrentPlayer().maxEnemyAround(from);
+                            if(from.getArmySize() - 1  > maxThreat){
+                                newState.getCurrentPlayer().moveArmies(from, to, from.getArmySize() - maxThreat);
+                            }
+                        }
                         double H_n = newState.getCurrentPlayer().attackHeuristic(newState.getCurrentPlayer().getTerritories().size(),
                                 newState.getOtherPlayer().getTerritories().size(),
                                 newState.getCurrentPlayer().getTotalArmiesOwned(),
                                 newState.getOtherPlayer().getTotalArmiesOwned());
-
                         newState.setH_n(H_n);
                         newState.setG_n(G_n);
                         pq.add(newState);

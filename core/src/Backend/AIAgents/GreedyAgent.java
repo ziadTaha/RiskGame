@@ -39,6 +39,7 @@ public class GreedyAgent extends Agent {
             }
             for (Territory neighbour : territory.getNeighbors()) {
                 if (neighbour.getAgent() != this && territory.getArmySize() - 1 > neighbour.getArmySize()) {
+
                     if (neighbour.getAgent() != null) {
                         int newStateEnemyTerr, newStateEnemyArmies, newStateOwnedTerr, newStateOwnedArmies;
                         newStateOwnedTerr = ownedTerritoriesSize + 1;
@@ -53,6 +54,7 @@ public class GreedyAgent extends Agent {
                             bestTo = neighbour;
                         }
                     } else {
+
                         int newStateEnemyTerr, newStateEnemyArmies, newStateOwnedTerr, newStateOwnedArmies;
                         newStateOwnedTerr = ownedTerritoriesSize + 1;
                         newStateEnemyTerr = enemyTerritoriesSize;
