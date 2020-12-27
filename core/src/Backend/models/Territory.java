@@ -8,7 +8,7 @@ public class Territory {
     private Agent agent;
     private int armySize = 0;
     private ArrayList<Territory> neighbors;
-    private int bonusPercent;
+    private double bonusPercent;
 
     public Territory(int id) {
         neighbors = new ArrayList<>();
@@ -47,11 +47,11 @@ public class Territory {
         this.neighbors = neighbors;
     }
 
-    public int getBonusPercent() {
+    public double getBonusPercent() {
         return bonusPercent;
     }
 
-    public void setBonusPercent(int bonusPercent) {
+    public void setBonusPercent(double bonusPercent) {
         this.bonusPercent = bonusPercent;
     }
 

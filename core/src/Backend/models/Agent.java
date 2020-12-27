@@ -24,13 +24,13 @@ public class Agent {
         int sumBSR = sumBSR();
         if (sumBSR != 0) {
             for (Territory territory: territories) {
-                int NBSRx = borderSecurityRatio(territory) / sumBSR;
+                double NBSRx = borderSecurityRatio(territory) / sumBSR;
                 territory.setBonusPercent(NBSRx);
             }
         } else {
             int territoriesSize = territories.size();
             for (Territory territory: territories) {
-                int NBSRx = 1 / territoriesSize;
+                double NBSRx = 1 / territoriesSize;
                 territory.setBonusPercent(NBSRx);
             }
         }
@@ -38,18 +38,20 @@ public class Agent {
         Collections.sort(territories, new Comparator<Territory>() {
             @Override
             public int compare(Territory t1, Territory t2) {
-                return t2.getBonusPercent() - t1.getBonusPercent();
+                return (int) (t2.getBonusPercent() - t1.getBonusPercent());
             }
         });
         // for now we calculated the percent of bonus for each territory
         for (Territory territory: territories) {
             if (bonusCount <= 0) break;
-            int curBonus = Math.round(territory.getBonusPercent() * bonus);
+            int curBonus = (int) Math.round(territory.getBonusPercent() * bonus);
             territory.setArmySize(territory.getArmySize() + curBonus);
             bonusCount -= curBonus;
         }
         if (bonusCount > 0) {   // add rest to maximum
-            territories.get(0).setArmySize(territories.get(0).getArmySize() + bonusCount);
+            Random rand = new Random();
+            int randomIndex = rand.nextInt(territories.size());
+            territories.get(randomIndex).setArmySize(territories.get(randomIndex).getArmySize() + bonusCount);
         }
     }
 
@@ -74,9 +76,9 @@ public class Agent {
     // border security ratio: indicate the level of danger this territory is in,
     // as it go high it means we might easily loose this territory
     // bst = border security threat / army size in this territory
-    private int borderSecurityRatio(Territory curTerritory) {
+    private double borderSecurityRatio(Territory curTerritory) {
         int bst = borderSecurityThreat(curTerritory);
-        int bsr = bst / curTerritory.getArmySize();
+        double bsr = bst / curTerritory.getArmySize();
         return bsr;
     }
 

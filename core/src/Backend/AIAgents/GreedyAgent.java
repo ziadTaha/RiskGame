@@ -39,17 +39,33 @@ public class GreedyAgent extends Agent {
             }
             for (Territory neighbour : territory.getNeighbors()) {
                 if (neighbour.getAgent() != this && territory.getArmySize() - 1 > neighbour.getArmySize()) {
-                    int newStateEnemyTerr, newStateEnemyArmies, newStateOwnedTerr, newStateOwnedArmies;
-                    newStateOwnedTerr = ownedTerritoriesSize + 1;
-                    newStateEnemyTerr = enemyTerritoriesSize - 1;
-                    newStateOwnedArmies = ownedArmiesSize - neighbour.getArmySize();
-                    newStateEnemyArmies = enemyArmiesSize - neighbour.getArmySize();
-                    double stateHeuristic = attackHeuristic(newStateOwnedTerr,
-                            newStateEnemyTerr, newStateOwnedArmies, newStateEnemyArmies);
-                    if (stateHeuristic < bestMoveHeuristic) {
-                        bestMoveHeuristic = stateHeuristic;
-                        bestFrom = territory;
-                        bestTo = neighbour;
+                    if (neighbour.getAgent() != null) {
+                        int newStateEnemyTerr, newStateEnemyArmies, newStateOwnedTerr, newStateOwnedArmies;
+                        newStateOwnedTerr = ownedTerritoriesSize + 1;
+                        newStateEnemyTerr = enemyTerritoriesSize - 1;
+                        newStateOwnedArmies = ownedArmiesSize - neighbour.getArmySize();
+                        newStateEnemyArmies = enemyArmiesSize - neighbour.getArmySize();
+                        double stateHeuristic = attackHeuristic(newStateOwnedTerr,
+                                newStateEnemyTerr, newStateOwnedArmies, newStateEnemyArmies);
+                        if (stateHeuristic < bestMoveHeuristic) {
+                            bestMoveHeuristic = stateHeuristic;
+                            bestFrom = territory;
+                            bestTo = neighbour;
+                        }
+                    } else {
+                        int newStateEnemyTerr, newStateEnemyArmies, newStateOwnedTerr, newStateOwnedArmies;
+                        newStateOwnedTerr = ownedTerritoriesSize + 1;
+                        newStateEnemyTerr = enemyTerritoriesSize;
+                        newStateOwnedArmies = ownedArmiesSize;
+                        newStateEnemyArmies = enemyArmiesSize;
+                        double stateHeuristic = attackHeuristic(newStateOwnedTerr,
+                                newStateEnemyTerr, newStateOwnedArmies, newStateEnemyArmies);
+                        if (stateHeuristic < bestMoveHeuristic) {
+                            bestMoveHeuristic = stateHeuristic;
+                            bestFrom = territory;
+                            bestTo = neighbour;
+                        }
+
                     }
                 }
             }
