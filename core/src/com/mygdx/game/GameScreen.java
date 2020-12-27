@@ -44,7 +44,7 @@ public class GameScreen extends BaseScreen{
         this.p1=p1;
         this.p2=p2;
         mode = 1;
-        temp = 1;
+        temp = 0;
         gameManager=GameManager.getInstance();
         gameManager.setMapType(map.toLowerCase());
         territoryMap=gameManager.getGameMap();
@@ -95,6 +95,7 @@ public class GameScreen extends BaseScreen{
         if(cur==1){
             p2Bar.setVisible(false);
             p1Bar.setVisible(true);
+
             if(p1.equals("Human")){
                 if(mode ==0){
                     mode=1;
@@ -111,14 +112,22 @@ public class GameScreen extends BaseScreen{
                 }
             }
             else{
-                agent1.addArmies();
-                agent1.attack();
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                temp++;
+                if(temp==2) {
+
+                    try {
+                        Thread.sleep(1000);
+                        agent1.addArmies();
+                        //Thread.sleep(2000);
+                        agent1.attack();
+                        //Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    cur = 2;
+                    temp =0;
                 }
-                cur=2;
             }
 
         }
@@ -141,14 +150,21 @@ public class GameScreen extends BaseScreen{
                 }
             }
             else{
-                agent2.addArmies();
-                agent2.attack();
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                temp++;
+                if(temp == 2){
+                    try {
+                        Thread.sleep(1000);
+                        agent2.addArmies();
+                        //Thread.sleep(2000);
+                        agent2.attack();
+                        //Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    cur=1;
+                    temp=0;
                 }
-                cur=1;
+
             }
 
         }
