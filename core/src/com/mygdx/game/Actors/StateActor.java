@@ -27,18 +27,7 @@ public class StateActor extends BaseActor {
         this.height = image.getHeight();
         this.width =image.getWidth();
         count =Integer.valueOf(stateNo);
-        /*Group group = new Group();
-        BitmapFont myFont = new BitmapFont(Gdx.files.internal("fonts/armies.fnt"));
-        TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
-        textButtonStyle.font=myFont;
-        Texture buttonTex = new Texture( Gdx.files.internal("ui_elements/army_number.png") );
-        NinePatch buttonPatch = new NinePatch(buttonTex, 0,0,0,0);
-        textButtonStyle.up = new NinePatchDrawable( buttonPatch );
-        army_count= new TextButton(String.valueOf(count),textButtonStyle);
-        army_count.setPosition(width/2+x,120+y+height/2);*/
         image.setPosition(x,y+120);
-        /*group.addActor(image);
-        group.addActor(army_count);*/
         this.addActor(image);
 
 

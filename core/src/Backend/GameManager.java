@@ -37,7 +37,6 @@ public class GameManager {
 
     // initialization of the map  from external text file according to the country chosen
     public void setMapType(String country) {
-        gameMap = new HashMap<>();
         int n = 0;
         String fileName = country + ".txt";
         gameMap = new HashMap<>();
@@ -133,6 +132,7 @@ public class GameManager {
             }
             Territory territory = gameMap.get(randomInt);
             territory.setAgent(player2);
+            System.out.println(territory.getId());
             player2.addTerritory(territory);
             int randomSize = rand.nextInt(n2) + 1;
             territory.setArmySize(randomSize);
