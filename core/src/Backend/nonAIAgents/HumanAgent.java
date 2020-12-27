@@ -21,17 +21,9 @@ public class HumanAgent extends Agent {
     }
 
     /** attacker dice count is 1, 2 or 3 & defender dice count is 1 or 2 **/
-
     public void attack(Territory from, Territory to, int attackDiceCount, int defendDiceCount) {
         //check adjacency of two territories
-        boolean isAdjacent = false;
-        for(Territory neighbour: from.getNeighbors()){
-            if(neighbour == to){
-                isAdjacent = true;
-                break;
-            }
-        }
-        if(!isAdjacent)
+        if(!from.getNeighbors().contains(to))
             throw new Error("attacks is only allowed to adjacent territories");
 
         //check the validation of the attack
@@ -45,6 +37,6 @@ public class HumanAgent extends Agent {
             throw new Error("Territory must have more than 1 army to Declare attack");
 
         // attack
-        this.declareAttack(from, to, attackDiceCount, defendDiceCount);
+        declareAttack(from, to, attackDiceCount, defendDiceCount);
     }
 }
