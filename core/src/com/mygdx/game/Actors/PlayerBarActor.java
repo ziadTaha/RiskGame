@@ -82,12 +82,15 @@ public class PlayerBarActor extends BaseActor {
                             !((InputEvent)event).getType().equals(InputEvent.Type.touchDown) ){
                         return false;
                     }
+
                     if(gameScreen.getTerritory1()!=null&&gameScreen.getTerritory2()!=null){
+
                         if(gameScreen.getCur()==1){
-                            gameScreen.getAgent1().declareAttack(gameScreen.getTerritory1(),gameScreen.getTerritory2(),3,2);
+
+                            gameScreen.getAgent1().attack(gameScreen.getTerritory1(), gameScreen.getTerritory2(), 3,2);
                         }
                         else{
-                            gameScreen.getAgent2().declareAttack(gameScreen.getTerritory1(),gameScreen.getTerritory2(),3,2);
+                            gameScreen.getAgent2().attack(gameScreen.getTerritory1(),gameScreen.getTerritory2(),3,2);
                         }
                         for(StateArmyActor s : gameScreen.getStateArmyActorMap().values()){
                             s.setStyle(s.getStyle(0));
