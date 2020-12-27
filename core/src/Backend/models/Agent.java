@@ -22,9 +22,17 @@ public class Agent {
         // indicate the percent each territory needs from the additional armies to be added
         // NBSRx (normalised bsr) = BSRx/sumBSR
         int sumBSR = sumBSR();
-        for (Territory territory: territories) {
-            int NBSRx = borderSecurityRatio(territory) / sumBSR;
-            territory.setBonusPercent(NBSRx);
+        if (sumBSR != 0) {
+            for (Territory territory: territories) {
+                int NBSRx = borderSecurityRatio(territory) / sumBSR;
+                territory.setBonusPercent(NBSRx);
+            }
+        } else {
+            int territoriesSize = territories.size();
+            for (Territory territory: territories) {
+                int NBSRx = 1 / territoriesSize;
+                territory.setBonusPercent(NBSRx);
+            }
         }
         // sort territories descending by percent of bonus army
         Collections.sort(territories, new Comparator<Territory>() {
@@ -40,7 +48,7 @@ public class Agent {
             territory.setArmySize(territory.getArmySize() + curBonus);
             bonusCount -= curBonus;
         }
-        if (bonusCount > 0) {
+        if (bonusCount > 0) {   // add rest to maximum
             territories.get(0).setArmySize(territories.get(0).getArmySize() + bonusCount);
         }
     }
@@ -82,6 +90,9 @@ public class Agent {
     }
 
     public void attack() {
+
+    }
+    public void attack(Territory from, Territory to, int attackDiceCount, int defendDiceCount) {
 
     }
 

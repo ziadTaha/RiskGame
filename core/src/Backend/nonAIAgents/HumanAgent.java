@@ -21,7 +21,10 @@ public class HumanAgent extends Agent {
     }
 
     /** attacker dice count is 1, 2 or 3 & defender dice count is 1 or 2 **/
+
+    @Override
     public void attack(Territory from, Territory to, int attackDiceCount, int defendDiceCount) {
+        System.out.println("I am here" + from.getArmySize() + " --------");
         //check adjacency of two territories
         if(!from.getNeighbors().contains(to))
             throw new Error("attacks is only allowed to adjacent territories");
@@ -33,8 +36,11 @@ public class HumanAgent extends Agent {
             throw new Error("Cannot attack owned Territory");
 
         //check armies in attacking territory
-        if(from.getArmySize() == 1 )
+        if(from.getArmySize() == 1 ){
+            System.out.println("Loool");
             throw new Error("Territory must have more than 1 army to Declare attack");
+        }
+
 
         // attack
         declareAttack(from, to, attackDiceCount, defendDiceCount);

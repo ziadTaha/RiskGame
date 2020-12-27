@@ -7,7 +7,10 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.scenes.scene2d.Event;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -30,7 +33,7 @@ public class PlayerBarActor extends BaseActor {
     private int player_mode ;
     private Label bonusText;
     private GameScreen gameScreen;
-    public PlayerBarActor(Stage s, int p, String type, GameScreen gameScreen) {
+    public PlayerBarActor(Stage s, int p, String type, final GameScreen gameScreen) {
         super(s);
         this.p=p;
         this.type=type;
@@ -72,7 +75,54 @@ public class PlayerBarActor extends BaseActor {
             textButtonStyle.font = customFont;
             textButtonStyle.fontColor = Color.WHITE;
             attack = new TextButton("attack",textButtonStyle);
+            attack.addListener(new EventListener() {
+                @Override
+                public boolean handle(Event event) {
+                    if ( !(event instanceof InputEvent) ||
+                            !((InputEvent)event).getType().equals(InputEvent.Type.touchDown) ){
+                        return false;
+                    }
+
+                    if(gameScreen.getTerritory1()!=null&&gameScreen.getTerritory2()!=null){
+
+                        if(gameScreen.getCur()==1){
+
+                            gameScreen.getAgent1().attack(gameScreen.getTerritory1(), gameScreen.getTerritory2(), 3,2);
+                        }
+                        else{
+                            gameScreen.getAgent2().attack(gameScreen.getTerritory1(),gameScreen.getTerritory2(),3,2);
+                        }
+                        for(StateArmyActor s : gameScreen.getStateArmyActorMap().values()){
+                            s.setStyle(s.getStyle(0));
+                        }
+                        gameScreen.setTerritory1(null);
+                        gameScreen.setTerritory2(null);
+                    }
+                    return false;
+
+                }
+            });
             end = new TextButton("end",textButtonStyle);
+            end.addListener(new EventListener() {
+                @Override
+                public boolean handle(Event event) {
+                    if ( !(event instanceof InputEvent) ||
+                            !((InputEvent)event).getType().equals(InputEvent.Type.touchDown) ){
+                        return false;
+                    }
+                    gameScreen.mode=0;
+                    for(StateArmyActor s : gameScreen.getStateArmyActorMap().values()){
+                        s.setStyle(s.getStyle(0));
+                    }
+                    if(gameScreen.getCur()==1){
+                        gameScreen.setCur(2);
+                    }
+                    else{
+                        gameScreen.setCur(1);
+                    }
+                    return false;
+                }
+            });
             Table table1 = new Table();
             table1.padLeft(500);
             table1.add(attack);

@@ -8,8 +8,8 @@ import java.util.Map;
 public class Simulation {
     public static void main(String[] args) {
         GameManager gameManager = GameManager.getInstance();
-        gameManager.setMapType("usa");
-        gameManager.setPlayersType("Pacifist", "Aggressive");
+        gameManager.setMapType("egypt");
+        gameManager.setPlayersType("AI1", "Pacifist");
         Agent player1 = gameManager.getPlayer1();
         Agent player2 = gameManager.getPlayer2();
         Map<Integer, Territory> gameMap = gameManager.getGameMap();
@@ -70,15 +70,18 @@ public class Simulation {
 //            System.out.println("player2 territory id = "+ terr.getId()+" has armies = "+terr.getArmySize());
 //        }
         int counter = 0;
-        while ((player1.getTotalArmiesOwned() != 0 || player2.getTotalArmiesOwned() != 0 ) && counter++ < 2000) {
+        while ((player1.getTotalArmiesOwned() != 0 || player2.getTotalArmiesOwned() != 0 ) && counter++ < 6) {
             System.out.print("player1 territories: ");
             for (Territory terr: player1.getTerritories()) {
-                System.out.print(terr.getId() + " "+"has armies = "+terr.getArmySize()+ "    ");
+                //System.out.print(terr.getId() + " "+"has armies = "+terr.getArmySize()+ "    ");
+                System.out.print(terr.getId() + " ");
             }
             System.out.println();
             System.out.print("player2 territories: ");
             for (Territory terr: player2.getTerritories()) {
-                System.out.print(terr.getId() + " "+"has armies = "+terr.getArmySize() + "    ");
+                //System.out.print(terr.getId() + " "+"has armies = "+terr.getArmySize() + "    ");
+                System.out.print(terr.getId() + " ");
+
             }
             System.out.println();
             System.out.println("--------------------------------------------");
