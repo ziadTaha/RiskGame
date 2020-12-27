@@ -9,6 +9,7 @@ public class PassiveAgent extends Agent {
     }
 
 
+    @Override
     public void addArmies() {
         Territory fewestArmiesTerritory = this.getTerritories().get(0);
         for(Territory ownedTerritory: this.getTerritories()){

@@ -109,10 +109,17 @@ public class Agent {
 
     public void moveArmies(Territory from, Territory to, int armiesCount){
         // validation check
-        if(from.getAgent() != this || to.getAgent() != this)
+        if(from.getAgent() != this || to.getAgent() != this) {
+            if(to.getAgent() != this)
+                System.out.println("loool1");
+            else if(from.getAgent() != this)
+                System.out.println("loool2");
             throw new Error("source or destination or both territories are not owned by the player");
+        }
         if(armiesCount > from.getArmySize() -1 )
             throw new Error("1 army at least must stay at the source territory to defend it");
+        if(!from.getNeighbors().contains(to))
+            throw new Error("destination must be adjacent to the source");
         from.setArmySize(from.getArmySize() - armiesCount);
         to.setArmySize(to.getArmySize() + armiesCount);
     }
@@ -145,9 +152,9 @@ public class Agent {
             while (numberFights != 0) {
                 numberFights--;
                 int attackerDie = Collections.max(attackerDice);
-                attackerDice.remove(attackerDie);
+                attackerDice.remove(attackerDice.indexOf(attackerDie));
                 int defenderDie = Collections.max(defenderDice);
-                defenderDice.remove(defenderDie);
+                defenderDice.remove(defenderDice.indexOf(defenderDie));
                 if (attackerDie > defenderDie) { // defender will lose one army
                     to.setArmySize(to.getArmySize() - 1);
                 } else { // attacker will lose one army
@@ -156,6 +163,7 @@ public class Agent {
                 }
                 if (to.getArmySize() == 0) // all armies at the to Territory are defeated
                 {
+                    to.getAgent().getTerritories().remove(to);
                     to.setAgent(this);
                     to.setArmySize(1);
                     from.setArmySize(from.getArmySize() - 1);
@@ -179,7 +187,7 @@ public class Agent {
     // may consider more parameters
     public double attackHeuristic(int territoriesOwnedSize, int enemyTerritoriesSize,int armiesOwnedSize
             ,int enemyArmiesSize){
-        return enemyTerritoriesSize/ territoriesOwnedSize   + enemyArmiesSize / armiesOwnedSize ;
+        return enemyTerritoriesSize/ territoriesOwnedSize + enemyArmiesSize / armiesOwnedSize ;
     }
 
     public double attackCost(int attackerArmies, int defenderArmies){

@@ -11,7 +11,6 @@ import Backend.nonAIAgents.AggressiveAgent;
 import Backend.nonAIAgents.HumanAgent;
 import Backend.nonAIAgents.PacifistAgent;
 import Backend.nonAIAgents.PassiveAgent;
-
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -29,6 +28,7 @@ public class GameManager {
 
     private GameManager() {
     }
+
     public static GameManager getInstance() {
         if (single_instance == null)
             single_instance = new GameManager();
@@ -40,12 +40,12 @@ public class GameManager {
         gameMap = new HashMap<>();
         int n = 0;
         String fileName = country + ".txt";
-        gameMap=new HashMap<>();
-        if(country.equals("egypt")){ // 27 territory
+        gameMap = new HashMap<>();
+        if (country.equals("egypt")) { // 27 territory
             n = 27;
-        }else if(country.equals("usa")){
+        } else if (country.equals("usa")) {
             n = 50;
-        }else{
+        } else {
             //error
         }
         for (int i = 1; i <= n; i++) {
@@ -59,7 +59,7 @@ public class GameManager {
         try {
             br = new BufferedReader(new FileReader(fileName));
             String line;
-            while ((line=br.readLine()) != null) {
+            while ((line = br.readLine()) != null) {
                 String[] neighbours = line.split("\\s+");
                 Territory t = gameMap.get(Integer.parseInt(neighbours[0]));
                 for (int i = 1; i < neighbours.length; i++) {
@@ -178,7 +178,7 @@ public class GameManager {
         Agent otherPlayerClone = otherPlayer.getEmptyClone();
 
         // creating clone map carrying new territories with their agents (without neighbours)
-        for (Map.Entry<Integer, Territory> entry: map.entrySet()) {
+        for (Map.Entry<Integer, Territory> entry : map.entrySet()) {
             Territory territory = entry.getValue();
             Territory terClone = territory.getEmptyClone();
             if (territory.getAgent().getAgentID() == curPlayerClone.getAgentID()) {
@@ -192,7 +192,7 @@ public class GameManager {
         }
 
         // add neighbours (have nothing to do with states(same in all cases))
-        for (Map.Entry<Integer, Territory> entry: cloneMap.entrySet()) {
+        for (Map.Entry<Integer, Territory> entry : cloneMap.entrySet()) {
             Territory curClone = entry.getValue();
             Territory originalTerr = map.get(entry.getKey());
             ArrayList<Territory> cloneNeighbors = new ArrayList<>();

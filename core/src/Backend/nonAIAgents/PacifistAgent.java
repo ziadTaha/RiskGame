@@ -9,7 +9,7 @@ public class PacifistAgent extends Agent {
         super();
     }
 
-
+    @Override
     public void addArmies() {
         Territory fewestArmiesTerritory = this.getTerritories().get(0);
         for(Territory ownedTerritory: this.getTerritories()){
@@ -27,10 +27,17 @@ public class PacifistAgent extends Agent {
         Territory to;
         to = from.getNeighbors().get(0);
         for(Territory neighbour: from.getNeighbors()){
-            if(neighbour.getArmySize() < to.getArmySize())
+            if(neighbour.getArmySize() < to.getArmySize() && neighbour.getAgent() != this)
                 to = neighbour;
         }
+
         //attack with 3 dice for attacker and two for
-        declareAttack(from, to, 3, 2);
+        if(to.getAgent() != this){
+            declareAttack(from, to, 3, 2);
+            if(to.getAgent() == this){
+                moveArmies(from, to, from.getArmySize() - 1);
+            }
+        }
+
     }
 }
