@@ -27,6 +27,7 @@ public class PlayerBarActor extends BaseActor {
     private String type;
     private TextButton attack;
     private TextButton end;
+    private TextButton fortify;
     private Image background;
     private Label player;
     private Label playerType;
@@ -98,7 +99,11 @@ public class PlayerBarActor extends BaseActor {
                             gameScreen.setTerritory1(null);
                             gameScreen.setTerritory2(null);
                         } catch (Error e){
-
+                            for(StateArmyActor s : gameScreen.getStateArmyActorMap().values()){
+                                s.setStyle(s.getStyle(0));
+                            }
+                            gameScreen.setTerritory1(null);
+                            gameScreen.setTerritory2(null);
                         }
 
                     }
@@ -114,27 +119,65 @@ public class PlayerBarActor extends BaseActor {
                             !((InputEvent)event).getType().equals(InputEvent.Type.touchDown) ){
                         return false;
                     }
-                    gameScreen.mode=0;
+                    gameScreen.mode=(gameScreen.mode+1)%4;
                     for(StateArmyActor s : gameScreen.getStateArmyActorMap().values()){
                         s.setStyle(s.getStyle(0));
                     }
-                    if(gameScreen.getCur()==1){
-                        gameScreen.setCur(2);
+                    if(gameScreen.mode==0){
+                        if(gameScreen.getCur()==1){
+                            gameScreen.setCur(2);
+                        }
+                        else{
+                            gameScreen.setCur(1);
+                        }
                     }
-                    else{
-                        gameScreen.setCur(1);
-                    }
+
                     return false;
                 }
             });
+            fortify = new TextButton("fortify",textButtonStyle);
+            fortify.addListener(new EventListener() {
+                @Override
+                public boolean handle(Event event) {
+                    if ( !(event instanceof InputEvent) ||
+                            !((InputEvent)event).getType().equals(InputEvent.Type.touchDown) ){
+                        return false;
+                    }
+
+                    if(gameScreen.getTerritory1()!=null&&gameScreen.getTerritory2()!=null){
+                        try{
+                            if(gameScreen.getCur()==1){
+                                gameScreen.getAgent1().moveArmies(gameScreen.getTerritory1(),gameScreen.getTerritory2(),1);//gameScreen.getAgent1().attack(gameScreen.getTerritory1(), gameScreen.getTerritory2(), 3,2);
+
+                            }
+                            else{
+                                //gameScreen.getAgent2().attack(gameScreen.getTerritory1(),gameScreen.getTerritory2(),3,2);
+                                gameScreen.getAgent2().moveArmies(gameScreen.getTerritory1(),gameScreen.getTerritory2(),1);
+
+                            }
+                        } catch (Error e){
+
+                        }
+
+                    }
+                    return false;
+
+                }
+            });
             Table table1 = new Table();
-            table1.padLeft(500);
+            //table1.padLeft(500);
+           /* Group group1 = new Group();
+            group1.addActor(attack);
+            group1.addActor(fortify);*/
             table1.add(attack);
+            table1.add(fortify);
             table1.add(end);
+            table1.align(Align.left);
             group.addActor(table1);
             group.addActor(bonusText);
             attack.setVisible(false);
             end.setVisible(false);
+            fortify.setVisible(false);
             bonusText.setVisible(true);
             table.add(group);
 
@@ -152,11 +195,19 @@ public class PlayerBarActor extends BaseActor {
                 if(player_mode==1){
                     attack.setVisible(false);
                     end.setVisible(false);
+                    fortify.setVisible(false);
                     bonusText.setVisible(true);
                 }
-                else{
+                else if(player_mode==2){
                     attack.setVisible(true);
                     end.setVisible(true);
+                    fortify.setVisible(false);
+                    bonusText.setVisible(false);
+                }
+                else{
+                    attack.setVisible(false);
+                    end.setVisible(true);
+                    fortify.setVisible(true);
                     bonusText.setVisible(false);
                 }
             }

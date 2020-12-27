@@ -52,7 +52,6 @@ public class GameScreen extends BaseScreen{
         agent1=gameManager.getPlayer1();
         agent2=gameManager.getPlayer2();
         stateArmyActorMap = new HashMap<>();
-
         initialize();
     }
     @Override
@@ -91,7 +90,6 @@ public class GameScreen extends BaseScreen{
             this.dispose();
             return ;
         }
-        System.out.println(cur+" "+p1Bar.isVisible()+" "+p2Bar.isVisible());
         if(cur==1){
             p2Bar.setVisible(false);
             p1Bar.setVisible(true);

@@ -58,28 +58,75 @@ public class StateArmyActor extends BaseActor{
                     }
                 }
                 else{
-                    if(gameScreen.getTerritory1().getNeighbors().contains(territory)){
-                        if(territory.getAgent()==null||(territory.getAgent().getAgentID()!=gameScreen.getCur())){
-                            if(gameScreen.getCur()==1){
-                                army_count.setStyle(getStyle(2));
+                    if(gameScreen.mode==2){
+                        if(gameScreen.getTerritory1().getNeighbors().contains(territory)){
+                            if(territory.getAgent()==null||(territory.getAgent().getAgentID()!=gameScreen.getCur())){
+                                if(gameScreen.getCur()==1){
+                                    army_count.setStyle(getStyle(2));
+                                }
+                                else
+                                {
+                                    army_count.setStyle(getStyle(1));
+                                }
+                                if(gameScreen.getTerritory2()!=null){
+                                    gameScreen.getStateArmyActorMap().get(gameScreen.getTerritory2().getId()).setStyle(getStyle(0));
+                                }
+                                gameScreen.setTerritory2(territory);
                             }
-                            else
-                            {
-                                army_count.setStyle(getStyle(1));
+                            else if (territory.getAgent().getAgentID()==gameScreen.getCur()){
+                                army_count.setStyle(getStyle(gameScreen.getCur()));
+                                gameScreen.getStateArmyActorMap().get(gameScreen.getTerritory1().getId()).setStyle(getStyle(0));
+                                gameScreen.setTerritory1(territory);
+                                if(gameScreen.getTerritory2()!=null){
+                                    gameScreen.getStateArmyActorMap().get(gameScreen.getTerritory2().getId()).setStyle(getStyle(0));
+                                    gameScreen.setTerritory2(null);
+                                }
                             }
+                        }
+                        else if (territory.getAgent()!=null&&territory.getAgent().getAgentID()==gameScreen.getCur()){
+                            gameScreen.getStateArmyActorMap().get(gameScreen.getTerritory1().getId()).setStyle(getStyle(0));
                             if(gameScreen.getTerritory2()!=null){
                                 gameScreen.getStateArmyActorMap().get(gameScreen.getTerritory2().getId()).setStyle(getStyle(0));
+                                gameScreen.setTerritory2(null);
+
                             }
-                            gameScreen.setTerritory2(territory);
+                            army_count.setStyle(getStyle(gameScreen.getCur()));
+                            gameScreen.setTerritory1(territory);
                         }
                     }
-                    else if (territory.getAgent()!=null&&territory.getAgent().getAgentID()==gameScreen.getCur()){
-                        gameScreen.getStateArmyActorMap().get(gameScreen.getTerritory1().getId()).setStyle(getStyle(0));
-                        if(gameScreen.getStateArmyActorMap().get(gameScreen.getTerritory2())!=null){
-                            gameScreen.getStateArmyActorMap().get(gameScreen.getTerritory2().getId()).setStyle(getStyle(0));
+                    else {
+                        if(gameScreen.getTerritory1().getNeighbors().contains(territory)){
+                            if(territory.getAgent()!=null&&territory.getAgent().getAgentID()==gameScreen.getCur()){
+                                if(gameScreen.getTerritory2()==null){
+                                    if(gameScreen.getCur()==1){
+                                        army_count.setStyle(getStyle(2));
+                                    }
+                                    else
+                                    {
+                                        army_count.setStyle(getStyle(1));
+                                    }
+                                    gameScreen.setTerritory2(territory);
+                                }
+                                else{
+                                    gameScreen.getStateArmyActorMap().get(gameScreen.getTerritory1().getId()).setStyle(getStyle(0));
+
+                                    gameScreen.getStateArmyActorMap().get(gameScreen.getTerritory2().getId()).setStyle(getStyle(0));
+                                    gameScreen.setTerritory2(null);
+                                    army_count.setStyle(getStyle(gameScreen.getCur()));
+                                    gameScreen.setTerritory1(territory);
+                                }
+                            }
                         }
-                        army_count.setStyle(getStyle(gameScreen.getCur()));
-                        gameScreen.setTerritory1(territory);
+                        else if (territory.getAgent()!=null&&territory.getAgent().getAgentID()==gameScreen.getCur()){
+                            gameScreen.getStateArmyActorMap().get(gameScreen.getTerritory1().getId()).setStyle(getStyle(0));
+                            if(gameScreen.getTerritory2()!=null){
+                                gameScreen.getStateArmyActorMap().get(gameScreen.getTerritory2().getId()).setStyle(getStyle(0));
+                                gameScreen.setTerritory2(null);
+
+                            }
+                            army_count.setStyle(getStyle(gameScreen.getCur()));
+                            gameScreen.setTerritory1(territory);
+                        }
                     }
                 }
                 
