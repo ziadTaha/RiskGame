@@ -90,6 +90,11 @@ public class GameScreen extends BaseScreen{
 
     @Override
     public void update(float dt) {
+        if(gameManager.checkGameEnd()){
+            game.setScreen(new GameOverScreen(game,cur));
+            this.dispose();
+            return ;
+        }
         if(cur==1){
             if(p1.equals("Human")){
                 if(mode ==0){
