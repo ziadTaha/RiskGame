@@ -85,8 +85,8 @@ public class GameScreen extends BaseScreen{
 
     @Override
     public void update(float dt) {
-        if(gameManager.checkGameEnd()){
-            game.setScreen(new GameOverScreen(game,cur));
+        if(gameManager.checkAgentGameEnd()!=0){
+            game.setScreen(new GameOverScreen(game,gameManager.checkAgentGameEnd()));
             this.dispose();
             return ;
         }

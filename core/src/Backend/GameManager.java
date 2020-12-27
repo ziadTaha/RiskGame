@@ -151,7 +151,13 @@ public class GameManager {
     public boolean checkGameEnd() {
         return player1.getTerritories().size() == 0 || player2.getTerritories().size() == 0;
     }
-
+    public int checkAgentGameEnd() {
+        if(player2.getTerritories().size() == 0)
+            return 1;
+        else if(player1.getTerritories().size() == 0)
+            return 2;
+        return 0;
+    }
     public Map<Integer, Territory> getGameMap() {
         return gameMap;
     }
