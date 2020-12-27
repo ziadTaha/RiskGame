@@ -74,6 +74,7 @@ public class MenuScreen extends BaseScreen{
                 }
                 System.out.println(mapChooser.value());
                 game.setScreen(new GameScreen(game,mapChooser.value(),p1Chooser.value(),p2Chooser.value()));
+                dispose();
                 return false;
             }
         });

@@ -44,7 +44,7 @@ public class GameScreen extends BaseScreen{
         this.p1=p1;
         this.p2=p2;
         mode = 1;
-        temp = 1;
+        temp = 0;
         gameManager=GameManager.getInstance();
         gameManager.setMapType(map.toLowerCase());
         territoryMap=gameManager.getGameMap();
@@ -59,25 +59,21 @@ public class GameScreen extends BaseScreen{
     public void initialize() {
         Table table = new Table();
         table.align(Align.top);
-
-
         mapActor = new MapActor(map,mainStage,this);
-
-
         mainStage.addActor(mapActor);
-
         Group group = new Group();
         p1Bar = new PlayerBarActor(mainStage,1,p1,this);
         p2Bar = new PlayerBarActor(mainStage,2,p2,this);
-
         group.addActor(p1Bar);
         group.addActor(p2Bar);
+        p1Bar.setVisible(true);
         p2Bar.setVisible(false);
         cur = 1;
         table.align(Align.left);
         table.add(group).align(Align.bottomLeft).expandY();
         table.setFillParent(true);
         mainStage.addActor(table);
+
     }
 
     public int getCur() {
@@ -90,26 +86,16 @@ public class GameScreen extends BaseScreen{
 
     @Override
     public void update(float dt) {
+        if(gameManager.checkGameEnd()){
+            game.setScreen(new GameOverScreen(game,cur));
+            this.dispose();
+            return ;
+        }
+        System.out.println(cur+" "+p1Bar.isVisible()+" "+p2Bar.isVisible());
         if(cur==1){
-            if(p1.equals("Human")){
-                if(mode ==0){
-                    mode=1;
-                }
-                else if(mode==1){
-                    if (!bonus_flag){
-                        bonus = agent1.calculateBonus();
-                        bonus_flag =true;
-                    }
-                    else if(bonus==0){
-                        mode =2;
-                        bonus_flag=false;
-                    }
-                }
-            }
             p2Bar.setVisible(false);
             p1Bar.setVisible(true);
-        }
-        else{
+
             if(p1.equals("Human")){
                 if(mode ==0){
                     mode=1;
@@ -125,8 +111,62 @@ public class GameScreen extends BaseScreen{
                     }
                 }
             }
+            else{
+                temp++;
+                if(temp==2) {
+
+                    try {
+                        Thread.sleep(1000);
+                        agent1.addArmies();
+                        //Thread.sleep(2000);
+                        agent1.attack();
+                        //Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    cur = 2;
+                    temp =0;
+                }
+            }
+
+        }
+        else{
             p1Bar.setVisible(false);
             p2Bar.setVisible(true);
+            if(p2.equals("Human")){
+                if(mode ==0){
+                    mode=1;
+                }
+                else if(mode==1){
+                    if (!bonus_flag){
+                        bonus = agent1.calculateBonus();
+                        bonus_flag =true;
+                    }
+                    else if(bonus==0){
+                        mode =2;
+                        bonus_flag=false;
+                    }
+                }
+            }
+            else{
+                temp++;
+                if(temp == 2){
+                    try {
+                        Thread.sleep(1000);
+                        agent2.addArmies();
+                        //Thread.sleep(2000);
+                        agent2.attack();
+                        //Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    cur=1;
+                    temp=0;
+                }
+
+            }
+
         }
     }
     public int getBonus() {

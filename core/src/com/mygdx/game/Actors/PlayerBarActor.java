@@ -84,19 +84,23 @@ public class PlayerBarActor extends BaseActor {
                     }
 
                     if(gameScreen.getTerritory1()!=null&&gameScreen.getTerritory2()!=null){
+                        try{
+                            if(gameScreen.getCur()==1){
 
-                        if(gameScreen.getCur()==1){
+                                gameScreen.getAgent1().attack(gameScreen.getTerritory1(), gameScreen.getTerritory2(), 3,2);
+                            }
+                            else{
+                                gameScreen.getAgent2().attack(gameScreen.getTerritory1(),gameScreen.getTerritory2(),3,2);
+                            }
+                            for(StateArmyActor s : gameScreen.getStateArmyActorMap().values()){
+                                s.setStyle(s.getStyle(0));
+                            }
+                            gameScreen.setTerritory1(null);
+                            gameScreen.setTerritory2(null);
+                        } catch (Error e){
 
-                            gameScreen.getAgent1().attack(gameScreen.getTerritory1(), gameScreen.getTerritory2(), 3,2);
                         }
-                        else{
-                            gameScreen.getAgent2().attack(gameScreen.getTerritory1(),gameScreen.getTerritory2(),3,2);
-                        }
-                        for(StateArmyActor s : gameScreen.getStateArmyActorMap().values()){
-                            s.setStyle(s.getStyle(0));
-                        }
-                        gameScreen.setTerritory1(null);
-                        gameScreen.setTerritory2(null);
+
                     }
                     return false;
 
