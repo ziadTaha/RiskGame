@@ -24,7 +24,7 @@ public class HumanAgent extends Agent {
 
     @Override
     public void attack(Territory from, Territory to, int attackDiceCount, int defendDiceCount) {
-        System.out.println("I am here" + from.getArmySize() + " --------");
+
         //check adjacency of two territories
         if(!from.getNeighbors().contains(to))
             throw new Error("attacks is only allowed to adjacent territories");

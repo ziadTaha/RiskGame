@@ -106,7 +106,7 @@ public class GameManager {
     }
 
     private void armiesPlacement() {
-        int n1 = 20, n2 = 20;
+        int n1 = 5, n2 = 5;
         int n = gameMap.size();
         int terrLeft = n;
         Random rand = new Random();
@@ -181,6 +181,8 @@ public class GameManager {
         for (Map.Entry<Integer, Territory> entry : map.entrySet()) {
             Territory territory = entry.getValue();
             Territory terClone = territory.getEmptyClone();
+            cloneMap.put(entry.getKey(), terClone);
+            if (territory.getAgent() == null) continue;
             if (territory.getAgent().getAgentID() == curPlayerClone.getAgentID()) {
                 terClone.setAgent(curPlayerClone);
                 curPlayerClone.addTerritory(terClone);
@@ -188,7 +190,6 @@ public class GameManager {
                 terClone.setAgent(otherPlayerClone);
                 otherPlayerClone.addTerritory(terClone);
             }
-            cloneMap.put(entry.getKey(), terClone);
         }
 
         // add neighbours (have nothing to do with states(same in all cases))

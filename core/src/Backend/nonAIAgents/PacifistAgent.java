@@ -32,7 +32,7 @@ public class PacifistAgent extends Agent {
         }
 
         //attack with 3 dice for attacker and two for
-        if(to.getAgent() != this){
+        if(to.getAgent() != this && from.getArmySize() > 1){
             declareAttack(from, to, 3, 2);
             if(to.getAgent() == this){
                 moveArmies(from, to, from.getArmySize() - 1);

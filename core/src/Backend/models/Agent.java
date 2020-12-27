@@ -202,11 +202,11 @@ public class Agent {
     }
 
     public double attackCost(int attackerArmies, int defenderArmies){
-        return attackerArmies / defenderArmies;
+        return defenderArmies / attackerArmies;
     }
 
     public double moveHeuristic(int ownedBorderArmies, int enemyBorderArmies){
-        return enemyBorderArmies / ownedBorderArmies;
+        return enemyBorderArmies / ownedBorderArmies; //Todo zero division check
     }
 
     public double moveCost(int numberOfMoves){
