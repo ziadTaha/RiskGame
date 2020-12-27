@@ -61,7 +61,6 @@ public class AStarAgent extends Agent {
                 for (Territory neighbour : territory.getNeighbors()) {
                     if (neighbour.getAgent() != currentState.getCurrentPlayer() && territory.getArmySize() - 1 > neighbour.getArmySize() &&
                             territory.getArmySize() > 1) {
-                        //System.out.println(territory.getId() + " " + neighbour.getId());
                         State newState = GameManager.getInstance().getStateClone(currentState.getCurrentPlayer(),
                                 currentState.getOtherPlayer(), currentState.getGameMap());
                         double G_n = newState.getCurrentPlayer().attackCost(newState.getGameMap().get(territory.getId()).getArmySize(),

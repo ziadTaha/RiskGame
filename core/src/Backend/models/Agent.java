@@ -48,7 +48,7 @@ public class Agent {
             territory.setArmySize(territory.getArmySize() + curBonus);
             bonusCount -= curBonus;
         }
-        if (bonusCount > 0) {   // add rest to maximum
+        if (bonusCount > 0) {  // add rest to maximum
             Random rand = new Random();
             int randomIndex = rand.nextInt(territories.size());
             territories.get(randomIndex).setArmySize(territories.get(randomIndex).getArmySize() + bonusCount);
@@ -72,13 +72,12 @@ public class Agent {
     }
 
 
-
     // border security ratio: indicate the level of danger this territory is in,
     // as it go high it means we might easily loose this territory
     // bst = border security threat / army size in this territory
     private double borderSecurityRatio(Territory curTerritory) {
         int bst = borderSecurityThreat(curTerritory);
-        double bsr = bst / curTerritory.getArmySize();
+        double bsr = ((double)bst) / curTerritory.getArmySize();
         return bsr;
     }
 
@@ -143,6 +142,10 @@ public class Agent {
             to.setAgent(this);
             to.setArmySize(1);
             from.setArmySize(from.getArmySize() - 1);
+//            int maxThreat = maxEnemyAround(from);
+//            if(from.getArmySize() - 1  > maxThreat){
+//                moveArmies(from, to, from.getArmySize() - maxThreat);
+//            }
             this.addTerritory(to);
         }else {
             ArrayList<Integer> attackerDice = new ArrayList<>(attackDiceCount);
@@ -174,6 +177,10 @@ public class Agent {
                     to.setAgent(this);
                     to.setArmySize(1);
                     from.setArmySize(from.getArmySize() - 1);
+//                    int maxThreat = maxEnemyAround(from);
+//                    if(from.getArmySize() - 1  > maxThreat){
+//                        moveArmies(from, to, from.getArmySize() - maxThreat);
+//                    }
                     this.addTerritory(to);
                     break;
                 }

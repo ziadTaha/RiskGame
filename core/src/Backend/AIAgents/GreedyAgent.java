@@ -72,6 +72,12 @@ public class GreedyAgent extends Agent {
         // declare attack
         if (bestMoveHeuristic < currentHeuristic) {
             declareAttack(bestFrom, bestTo, 3, 2);
+            if(bestTo.getAgent() == this){
+                int maxThreat = maxEnemyAround(bestFrom);
+                if(bestFrom.getArmySize() - 1  > maxThreat){
+                    moveArmies(bestFrom, bestTo, bestFrom.getArmySize() - maxThreat);
+                }
+            }
         }
         // else there will be no attack
     }

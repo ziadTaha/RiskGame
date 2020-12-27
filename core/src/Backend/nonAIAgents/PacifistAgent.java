@@ -21,7 +21,7 @@ public class PacifistAgent extends Agent {
         fewestArmiesTerritory.setArmySize(fewestArmiesTerritory.getArmySize() + bonusArmies);
         attackingTerritory = fewestArmiesTerritory;
     }
-
+    @Override
     public void attack() {
         Territory from = attackingTerritory;
         Territory to;
@@ -36,10 +36,9 @@ public class PacifistAgent extends Agent {
             if(to.getAgent() == this){
                 int maxThreat = maxEnemyAround(from);
                 if(from.getArmySize() - 1  > maxThreat){
-                    moveArmies(from, to, from.getArmySize() - maxThreat);
+                    moveArmies(from, to, from.getArmySize() - 1 - maxThreat);
                 }
             }
         }
-
     }
 }
