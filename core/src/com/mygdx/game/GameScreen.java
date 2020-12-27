@@ -59,25 +59,21 @@ public class GameScreen extends BaseScreen{
     public void initialize() {
         Table table = new Table();
         table.align(Align.top);
-
-
         mapActor = new MapActor(map,mainStage,this);
-
-
         mainStage.addActor(mapActor);
-
         Group group = new Group();
         p1Bar = new PlayerBarActor(mainStage,1,p1,this);
         p2Bar = new PlayerBarActor(mainStage,2,p2,this);
-
         group.addActor(p1Bar);
         group.addActor(p2Bar);
+        p1Bar.setVisible(true);
         p2Bar.setVisible(false);
         cur = 1;
         table.align(Align.left);
         table.add(group).align(Align.bottomLeft).expandY();
         table.setFillParent(true);
         mainStage.addActor(table);
+
     }
 
     public int getCur() {
@@ -95,26 +91,10 @@ public class GameScreen extends BaseScreen{
             this.dispose();
             return ;
         }
+        System.out.println(cur+" "+p1Bar.isVisible()+" "+p2Bar.isVisible());
         if(cur==1){
-            if(p1.equals("Human")){
-                if(mode ==0){
-                    mode=1;
-                }
-                else if(mode==1){
-                    if (!bonus_flag){
-                        bonus = agent1.calculateBonus();
-                        bonus_flag =true;
-                    }
-                    else if(bonus==0){
-                        mode =2;
-                        bonus_flag=false;
-                    }
-                }
-            }
             p2Bar.setVisible(false);
             p1Bar.setVisible(true);
-        }
-        else{
             if(p1.equals("Human")){
                 if(mode ==0){
                     mode=1;
@@ -130,8 +110,47 @@ public class GameScreen extends BaseScreen{
                     }
                 }
             }
+            else{
+                agent1.addArmies();
+                agent1.attack();
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                cur=2;
+            }
+
+        }
+        else{
             p1Bar.setVisible(false);
             p2Bar.setVisible(true);
+            if(p2.equals("Human")){
+                if(mode ==0){
+                    mode=1;
+                }
+                else if(mode==1){
+                    if (!bonus_flag){
+                        bonus = agent1.calculateBonus();
+                        bonus_flag =true;
+                    }
+                    else if(bonus==0){
+                        mode =2;
+                        bonus_flag=false;
+                    }
+                }
+            }
+            else{
+                agent2.addArmies();
+                agent2.attack();
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                cur=1;
+            }
+
         }
     }
     public int getBonus() {
