@@ -12,15 +12,13 @@ public class Simulation {
 
         GameManager gameManager = GameManager.getInstance();
         gameManager.setMapType("egypt");
-        gameManager.setPlayersType("Pacifist", "AI2");
+        gameManager.setPlayersType("Pacifist", "Aggressive");
         Agent player1 = gameManager.getPlayer1();
         Agent player2 = gameManager.getPlayer2();
         Map<Integer, Territory> gameMap = gameManager.getGameMap();
         System.out.println("map size = "+gameMap.size());
 
         State temp = GameManager.getInstance().getStateClone(player1, player2, gameMap);
-
-
 
 
 ////        // checking map construction
@@ -78,7 +76,7 @@ public class Simulation {
 //            System.out.println("player2 territory id = "+ terr.getId()+" has armies = "+terr.getArmySize());
 //        }
         int counter = 0;
-        while ((player1.getTotalArmiesOwned() != 0 || player2.getTotalArmiesOwned() != 0 ) && counter++ < 10) {
+        while ((player1.getTotalArmiesOwned() != 0 || player2.getTotalArmiesOwned() != 0 ) && counter++ < 1000) {
             System.out.print("player1 territories: ");
             for (Territory terr: player1.getTerritories()) {
                 System.out.print(terr.getId() + " "+"has armies = "+terr.getArmySize()+ "    ");

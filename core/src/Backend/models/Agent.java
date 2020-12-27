@@ -30,7 +30,7 @@ public class Agent {
         } else {
             int territoriesSize = territories.size();
             for (Territory territory: territories) {
-                double NBSRx = 1 / territoriesSize;
+                double NBSRx = 1.0 / territoriesSize;
                 territory.setBonusPercent(NBSRx);
             }
         }
@@ -118,15 +118,9 @@ public class Agent {
         this.getTerritories().add(territory);
     }
 
-
-
     public void moveArmies(Territory from, Territory to, int armiesCount){
         // validation check
         if(from.getAgent() != this || to.getAgent() != this) {
-            if(to.getAgent() != this)
-                System.out.println("loool1");
-            else if(from.getAgent() != this)
-                System.out.println("loool2");
             throw new Error("source or destination or both territories are not owned by the player");
         }
         if(armiesCount > from.getArmySize() -1 )
@@ -187,7 +181,6 @@ public class Agent {
         }
     }
 
-
     // find the adjacent enemy with the max armies
     public int getTotalArmiesOwned(){
         int total = 0;
@@ -219,5 +212,27 @@ public class Agent {
         Agent clone = new Agent();
         clone.setAgentID(this.agentID);
         return clone;
+    }
+
+    public int getBorderArmies(){
+        int borderArmies = 0;
+        for(Territory territory: getTerritories()){
+            for(Territory neighbour: territory.getNeighbors()){
+                if(neighbour.getAgent() != this){
+                    borderArmies += territory.getArmySize();
+                    break;
+                }
+            }
+        }
+        return borderArmies;
+    }
+
+    public int maxEnemyAround(Territory terr){
+        int max = 0;
+        for(Territory neighbour: terr.getNeighbors()){
+            if(neighbour.getAgent() != this && neighbour.getArmySize() > max );
+                max = neighbour.getArmySize();
+        }
+        return 1;
     }
 }

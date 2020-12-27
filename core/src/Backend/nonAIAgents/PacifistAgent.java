@@ -30,12 +30,14 @@ public class PacifistAgent extends Agent {
             if(neighbour.getArmySize() < to.getArmySize() && neighbour.getAgent() != this)
                 to = neighbour;
         }
-
         //attack with 3 dice for attacker and two for
         if(to.getAgent() != this && from.getArmySize() > 1){
             declareAttack(from, to, 3, 2);
             if(to.getAgent() == this){
-                moveArmies(from, to, from.getArmySize() - 1);
+                int maxThreat = maxEnemyAround(from);
+                if(from.getArmySize() - 1  > maxThreat){
+                    moveArmies(from, to, from.getArmySize() - maxThreat);
+                }
             }
         }
 

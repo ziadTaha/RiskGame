@@ -65,14 +65,12 @@ public class GreedyAgent extends Agent {
                             bestFrom = territory;
                             bestTo = neighbour;
                         }
-
                     }
                 }
             }
         }
         // declare attack
         if (bestMoveHeuristic < currentHeuristic) {
-
             declareAttack(bestFrom, bestTo, 3, 2);
         }
         // else there will be no attack
